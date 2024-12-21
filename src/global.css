@@ -1,0 +1,62 @@
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+}
+
+[data-theme="dark"] {
+  --background-color: #121212;
+  --text-color: #fff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.playerWrapper {
+  position: relative;
+  width: 100%;
+  /* height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.controlsWrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+  /* align-items: center; */
+  /* padding: 10px; */
+}
+
+.controlsIcons {
+  color: "#777";
+  font-size: 50;
+  transform: scale(0.9);
+}
+
+.controlsIcons:hover {
+  color: #fff;
+  transform: scale(1);
+}
+
+.bottomIcons {
+  color: "#999";
+}
+
+.bottomIcons:hover {
+  color: #fff;
+}
+
+.volumeSlider {
+  width: 100;
+}
