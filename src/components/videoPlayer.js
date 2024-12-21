@@ -1,16 +1,15 @@
 import React, { useState, useRef } from "react";
-import Container from "@mui/material/Container";
+import { Container, Grid2, Typography, Card, CardMedia, CardContent, IconButton } from "@mui/material";
 import ReactPlayer from "react-player";
 import "../global.css";
 import PlayerControls from "./playerControls";
 import screenfull from "screenfull";
-import Grid2 from "@mui/material/Grid2";
-import Paper from "@mui/material/Paper";
-import { Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { AlignVerticalBottom, Padding } from "@mui/icons-material";
 
 let count = 0;
 
-function VideoPlayer() {
+function VideoPlayer({ source, title }) {
   const [state, setState] = useState({
     playing: true,
     muted: true,
@@ -144,6 +143,10 @@ function VideoPlayer() {
     ]);
   };
 
+  const deleteBookmark = (index) => {
+    setBookmarks(bookmarks.filter((_, i) => i !== index));
+  };
+
   const handleMouseMove = () => {
     controlsRef.current.style.visibility = "visible";
     count = 0;
@@ -173,7 +176,7 @@ function VideoPlayer() {
           ref={playerRef}
           width={"100%"}
           height={"100%"}
-          url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+          url={source || "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
           muted={muted}
           playing={playing}
           volume={volume}
@@ -209,21 +212,42 @@ function VideoPlayer() {
           totalDuration={totalDuration}
           onChangeDispayFormat={handleChangeDispayFormat}
           onBookmark={addBookmark}
+          title={title}
         />
       </div>
 
       <Grid2 container style={{ marginTop: 20 }} spacing={3}>
         {bookmarks.map((bookmark, index) => (
-          <Grid2 item key={index}>
-            <Paper onClick={() => playerRef.current.seekTo(bookmark.time)}>
-              <img
-                crossOrigin="anonymous"
-                src={bookmark.image}
+          <Grid2 item key={index} xs={12} sm={6} md={4}>
+            <Card>
+              <CardMedia
+                component="img"
+                height="80"
+                image={bookmark.image}
                 alt={`Bookmark at ${format(bookmark.time)}`}
-                style={{ width: 150 }}
+                onClick={() => playerRef.current.seekTo(bookmark.time)}
               />
-              <Typography>Bookmark at {format(bookmark.time)}</Typography>
-            </Paper>
+              <CardContent style={{marginBottom: -20, marginTop: -10}}>
+                <Grid2 container justifyContent="space-between" direction={"row"} alignItems={"center"}>
+                  <Grid2 item>
+                <Typography variant="body2" color="textSecondary">
+                  Bookmark at {format(bookmark.time)}
+                </Typography>
+                </Grid2>
+
+                <Grid2 item style={{marginRight: -15}}>
+                <IconButton
+                fontSize="small"
+                  aria-label="delete"
+                  onClick={() => deleteBookmark(index)}
+                  sx={{ color: "red" }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+                </Grid2>
+                </Grid2>
+              </CardContent>
+            </Card>
           </Grid2>
         ))}
       </Grid2>

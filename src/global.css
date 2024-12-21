@@ -17,6 +17,7 @@ body {
 .playerWrapper {
   position: relative;
   width: 100%;
+  margin-top: 20px;
   /* height: 100%;
   display: flex;
   justify-content: center;
@@ -39,7 +40,7 @@ body {
 }
 
 .controlsIcons {
-  color: "#777";
+  color: #777;
   font-size: 50;
   transform: scale(0.9);
 }
@@ -50,7 +51,7 @@ body {
 }
 
 .bottomIcons {
-  color: "#999";
+  color: #333;
 }
 
 .bottomIcons:hover {

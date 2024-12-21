@@ -1,21 +1,25 @@
 import { forwardRef } from "react";
-import { Typography } from "@mui/material";
 import "../global.css";
-import Grid2 from "@mui/material/Grid2";
-import Button from "@mui/material/Button";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import IconButton from "@mui/material/IconButton";
-import FastRewindIcon from "@mui/icons-material/FastRewind";
-import FastForwardIcon from "@mui/icons-material/FastForward";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import PauseIcon from "@mui/icons-material/Pause";
+import {
+  Typography,
+  Grid2,
+  Button,
+  IconButton,
+  Slider,
+  Tooltip,
+} from "@mui/material";
+import {
+  Bookmark as BookmarkIcon,
+  FastRewind as FastRewindIcon,
+  FastForward as FastForwardIcon,
+  PlayArrow as PlayArrowIcon,
+  Pause as PauseIcon,
+  VolumeUp as VolumeUpIcon,
+  VolumeOff as VolumeOffIcon,
+  Fullscreen as FullScreenIcon,
+} from "@mui/icons-material";
 import PrettoSlider from "./prettoSlider";
-import Slider from "@mui/material/Slider";
-import Tooltip from "@mui/material/Tooltip";
-import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import VolumeOff from "@mui/icons-material/VolumeOff";
-import FullScreenIcon from "@mui/icons-material/Fullscreen";
-import Popover from "./pophover";
+import Popover from "./playbackRatePopover";
 
 function ValueLabelComponent(props) {
   const { children, value } = props;
@@ -27,28 +31,33 @@ function ValueLabelComponent(props) {
   );
 }
 
-function PlayerControls({
-  onPlayPause,
-  playing,
-  onRewind,
-  onFastForward,
-  muted,
-  onMute,
-  onVolumeChange,
-  onVolumeSeekUp,
-  volume,
-  playbackRate,
-  onPlaybackRateChange,
-  onToggleFullScreen,
-  played,
-  onSeek,
-  onSeekMouseDown,
-  onSeekMouseUp,
-  elapsedTime,
-  totalDuration,
-  onChangeDispayFormat,
-  onBookmark,
-}, ref) {
+function PlayerControls(
+  {
+    onPlayPause,
+    playing,
+    onRewind,
+    onFastForward,
+    muted,
+    onMute,
+    onVolumeChange,
+    onVolumeSeekUp,
+    volume,
+    playbackRate,
+    onPlaybackRateChange,
+    onToggleFullScreen,
+    played,
+    onSeek,
+    onSeekMouseDown,
+    onSeekMouseUp,
+    elapsedTime,
+    totalDuration,
+    onChangeDispayFormat,
+    onBookmark,
+    title,
+  },
+  ref
+) {
+
   return (
     <div className="controlsWrapper" ref={ref}>
       {/* Top Controls */}
@@ -61,7 +70,7 @@ function PlayerControls({
       >
         <Grid2 item>
           <Typography variant="h5" style={{ color: "#fff" }}>
-            Video Title
+            {title}
           </Typography>
         </Grid2>
 
@@ -83,11 +92,13 @@ function PlayerControls({
         direction="row"
         alignItems="center"
         justifyContent="center"
+        spacing={3}
       >
         <IconButton
           onClick={onRewind}
           className="controlsIcons"
           aria-label="rewind"
+          sx={{ color: "white" }}
         >
           <FastRewindIcon fontSize="inherit" />
         </IconButton>
@@ -96,6 +107,7 @@ function PlayerControls({
           onClick={onPlayPause}
           className="controlsIcons"
           aria-label="rewind"
+          sx={{ color: "white" }}
         >
           {playing ? (
             <PauseIcon fontSize="inherit" />
@@ -108,6 +120,7 @@ function PlayerControls({
           onClick={onFastForward}
           className="controlsIcons"
           aria-label="rewind"
+          sx={{ color: "white" }}
         >
           <FastForwardIcon fontSize="inherit" />
         </IconButton>
@@ -127,8 +140,10 @@ function PlayerControls({
             max={100}
             valueLabelDisplay="auto"
             aria-label="pretto slider"
-            value={played * 100}
-            ValueLabelComponent={(props) => <ValueLabelComponent {...props} value={elapsedTime} />}
+            value={Math.floor(played * 100)}
+            ValueLabelComponent={(props) => (
+              <ValueLabelComponent {...props} value={elapsedTime} />
+            )}
             onChange={onSeek}
             onMouseDown={onSeekMouseDown}
             onChangeCommitted={onSeekMouseUp}
@@ -138,7 +153,7 @@ function PlayerControls({
         <Grid2 item>
           <Grid2 container direction="row" alignItems="center" spacing={1}>
             <Grid2 item>
-              <IconButton onClick={onPlayPause} className="bottomIcons">
+              <IconButton onClick={onPlayPause} className="bottomIcons" sx={{ color: "white" }}>
                 {playing ? (
                   <PauseIcon fontSize="large" />
                 ) : (
@@ -150,9 +165,9 @@ function PlayerControls({
             <Grid2 item>
               <IconButton onClick={onMute} className="bottomIcons">
                 {muted ? (
-                  <VolumeOff fontSize="large" />
+                  <VolumeOffIcon fontSize="large" sx={{ color: "white" }} />
                 ) : (
-                <VolumeUpIcon fontSize="large" />
+                  <VolumeUpIcon fontSize="large" sx={{ color: "white" }} />
                 )}
               </IconButton>
             </Grid2>
@@ -172,12 +187,14 @@ function PlayerControls({
 
                 <Grid2 item>
                   <Button
-                  onClick={onChangeDispayFormat}
+                    onClick={onChangeDispayFormat}
                     variant="text"
                     className="bottomIcons"
                     style={{ color: "#fff", marginLeft: 16 }}
                   >
-                    <Typography>{elapsedTime}/{totalDuration}</Typography>
+                    <Typography>
+                      {elapsedTime}/{totalDuration}
+                    </Typography>
                   </Button>
                 </Grid2>
               </div>
@@ -208,7 +225,11 @@ function PlayerControls({
               </Grid2>
 
               <Grid2 item>
-                <IconButton onClick={onToggleFullScreen} className="bottomIcons">
+                <IconButton
+                  onClick={onToggleFullScreen}
+                  className="bottomIcons"
+                  sx={{ color: "white" }}
+                >
                   <FullScreenIcon fontSize="large" />
                 </IconButton>
               </Grid2>
