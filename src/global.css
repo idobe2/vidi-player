@@ -17,11 +17,16 @@ body {
 .playerWrapper {
   position: relative;
   width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
   margin-top: 20px;
-  /* height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center; */
+}
+
+.playerWrapper > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .controlsWrapper {
@@ -35,8 +40,6 @@ body {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 1;
-  /* align-items: center; */
-  /* padding: 10px; */
 }
 
 .controlsIcons {
@@ -56,8 +59,4 @@ body {
 
 .bottomIcons:hover {
   color: #fff;
-}
-
-.volumeSlider {
-  width: 100;
 }

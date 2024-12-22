@@ -1,5 +1,14 @@
 import React, { useState, useRef } from "react";
-import { Container, Grid2, Typography, Card, CardMedia, CardContent, IconButton } from "@mui/material";
+import {
+  Container,
+  Grid2,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import ReactPlayer from "react-player";
 import "../global.css";
 import PlayerControls from "./playerControls";
@@ -120,8 +129,13 @@ function VideoPlayer({ source, title }) {
   };
 
   const addBookmark = () => {
+    if (source.includes("youtube.com") || source.includes("youtu.be")) {
+      alert("Bookmarks are not supported for YouTube videos.");
+      return;
+    }
     const canvas = canvasRef.current;
-    const { videoWidth, videoHeight } = playerRef.current.getInternalPlayer();
+    const videoWidth = playerRef.current.getInternalPlayer().videoWidth / 2;
+    const videoHeight = playerRef.current.getInternalPlayer().videoHeight / 2;
     const ctx = canvas.getContext("2d");
 
     ctx.drawImage(
@@ -146,6 +160,14 @@ function VideoPlayer({ source, title }) {
     setBookmarks(bookmarks.filter((_, i) => i !== index));
   };
 
+  const renameBookmark = (index, newTitle) => {
+    setBookmarks((prevBookmarks) =>
+      prevBookmarks.map((bookmark, i) =>
+        i === index ? { ...bookmark, title: newTitle } : bookmark
+      )
+    );
+  };
+
   const handleMouseMove = () => {
     controlsRef.current.style.visibility = "visible";
     count = 0;
@@ -153,7 +175,7 @@ function VideoPlayer({ source, title }) {
 
   const handleDoubleClick = () => {
     screenfull.toggle(playerContainerRef.current);
-};
+  };
 
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
@@ -180,14 +202,18 @@ function VideoPlayer({ source, title }) {
           ref={playerRef}
           width={"100%"}
           height={"100%"}
-          url={source || "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}
+          url={
+            source ||
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+          }
           muted={muted}
           playing={playing}
           volume={volume}
           playbackRate={playbackRate}
           onProgress={handleProgress}
+          onEnded={handlePlayPause}
           config={{
-            file: {
+            file: { 
               attributes: {
                 crossOrigin: "anonymous",
               },
@@ -231,24 +257,34 @@ function VideoPlayer({ source, title }) {
                 alt={`Bookmark at ${format(bookmark.time)}`}
                 onClick={() => playerRef.current.seekTo(bookmark.time)}
               />
-              <CardContent style={{marginBottom: -20, marginTop: -10}}>
+              <CardContent
+                style={{
+                  marginBottom: -20,
+                  marginTop: -10,
+                  paddingLeft: 5,
+                  paddingRight: 0,
+                }}
+              >
                 <Grid2 container direction={"row"} alignItems={"center"}>
-                  <Grid2 item>
-                <Typography variant="body2" color="textSecondary">
-                  Bookmark at {format(bookmark.time)}
-                </Typography>
-                </Grid2>
+                  <Grid2 item xs={8} style={{ width: "80%" }}>
+                    <TextField
+                      variant="outlined"
+                      size="small"
+                      value={`Bookmark at ${format(bookmark.time)}`}
+                      onChange={(e) => renameBookmark(index, e.target.value)}
+                    />
+                  </Grid2>
 
-                <Grid2 item style={{marginRight: -15}}>
-                <IconButton
-                fontSize="small"
-                  aria-label="delete"
-                  onClick={() => deleteBookmark(index)}
-                  sx={{ color: "red" }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-                </Grid2>
+                  <Grid2 item style={{ marginRight: -15 }}>
+                    <IconButton
+                      fontSize="small"
+                      aria-label="delete"
+                      onClick={() => deleteBookmark(index)}
+                      sx={{ color: "red" }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid2>
                 </Grid2>
               </CardContent>
             </Card>
@@ -257,6 +293,15 @@ function VideoPlayer({ source, title }) {
       </Grid2>
 
       <canvas ref={canvasRef} />
+      {/* Footer */}
+      <Typography
+        variant="body2"
+        color="textSecondary"
+        align="center"
+        style={{ marginTop: "2rem" }}
+      >
+        © {new Date().getFullYear()} Vi-Di Player. All rights reserved.
+      </Typography>
     </Container>
   );
 }

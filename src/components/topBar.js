@@ -6,10 +6,15 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FileManager from "./fileManager";
+import RecentVideos from "./recentVideos";
 
-const TopBar = ({ onFileSubmit }) => {
+const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect }) => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [fileManagerOpen, setFileManagerOpen] = useState(false);
+
+  const handleVideoSelect = (video) => {
+    onRecentVideoSelect(video);
+  };
 
   return (
     <>
@@ -50,6 +55,13 @@ const TopBar = ({ onFileSubmit }) => {
               alignItems="center"
               spacing={2}
             >
+              <Grid2 item>
+                <RecentVideos
+                  recentVideos={recentVideos}
+                  onVideoSelect={handleVideoSelect}
+                />
+              </Grid2>
+              
               <Grid2 item>
                 <Button color="inherit" component={Link} to="/about">
                   About
