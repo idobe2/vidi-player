@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import VideoPlayer from "./components/videoPlayer";
 import { ThemeProvider } from "./context/themeContext";
 import TopBar from "./components/topBar";
+import About from "./components/about";
 
 function App() {
   const [videoSource, setVideoSource] = useState("");
   const [videoTitle, setVideoTitle] = useState("Default Video");
-
 
   const handleFileSubmit = (file, url) => {
     if (file) {
@@ -21,13 +22,16 @@ function App() {
   };
 
   return (
-    <>
+    <Router>
       <ThemeProvider>
-      <TopBar onFileSubmit={handleFileSubmit} />
+        <TopBar onFileSubmit={handleFileSubmit} />
         <Toolbar />
-        <VideoPlayer source={videoSource} title={videoTitle} />
+        <Routes>
+          <Route path="/" element={<VideoPlayer source={videoSource} title={videoTitle} />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </ThemeProvider>
-    </>
+    </Router>
   );
 }
 

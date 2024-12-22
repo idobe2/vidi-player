@@ -5,7 +5,6 @@ import "../global.css";
 import PlayerControls from "./playerControls";
 import screenfull from "screenfull";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { AlignVerticalBottom, Padding } from "@mui/icons-material";
 
 let count = 0;
 
@@ -152,6 +151,10 @@ function VideoPlayer({ source, title }) {
     count = 0;
   };
 
+  const handleDoubleClick = () => {
+    screenfull.toggle(playerContainerRef.current);
+};
+
   const currentTime = playerRef.current
     ? playerRef.current.getCurrentTime()
     : "00:00";
@@ -171,6 +174,7 @@ function VideoPlayer({ source, title }) {
         ref={playerContainerRef}
         className="playerWrapper"
         onMouseMove={handleMouseMove}
+        onDoubleClick={handleDoubleClick}
       >
         <ReactPlayer
           ref={playerRef}
@@ -228,7 +232,7 @@ function VideoPlayer({ source, title }) {
                 onClick={() => playerRef.current.seekTo(bookmark.time)}
               />
               <CardContent style={{marginBottom: -20, marginTop: -10}}>
-                <Grid2 container justifyContent="space-between" direction={"row"} alignItems={"center"}>
+                <Grid2 container direction={"row"} alignItems={"center"}>
                   <Grid2 item>
                 <Typography variant="body2" color="textSecondary">
                   Bookmark at {format(bookmark.time)}

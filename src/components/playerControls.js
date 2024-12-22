@@ -79,9 +79,8 @@ function PlayerControls(
             onClick={onBookmark}
             variant="contained"
             color="primary"
-            startIcon={<BookmarkIcon />}
+            startIcon={<BookmarkIcon style={{paddingLeft: 10, fontSize: "32"}}/>}
           >
-            Bookmark
           </Button>
         </Grid2>
       </Grid2>
