@@ -8,10 +8,11 @@ import {
   TextField,
   Typography,
   Grid2,
+  Divider,
 } from "@mui/material";
 import "../global.css";
 import DragDropZone from "./dragDropZone";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 
 const FileManager = ({ open, onClose, onSubmit }) => {
   const [file, setFile] = useState(null);
@@ -42,8 +43,25 @@ const FileManager = ({ open, onClose, onSubmit }) => {
       onSubmit(file, url);
       onClose();
       setFile(null);
+      setUrl("");
     } else {
       alert("Please provide a video file or URL.");
+    }
+  };
+
+  const handleCancel = () => {
+    if (file) {
+      if (
+        window.confirm(
+          "You have selected a file. You will need to upload it again later if you cancel. Do you want to proceed?"
+        )
+      ) {
+        setFile(null);
+        setUrl("");
+        onClose();
+      }
+    } else {
+      onClose();
     }
   };
 
@@ -59,7 +77,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
   return (
     <Dialog
       open={open}
-      onClose={onClose}
+      onClose={handleCancel}
       maxWidth="sm"
       fullWidth
       PaperProps={{
@@ -72,16 +90,16 @@ const FileManager = ({ open, onClose, onSubmit }) => {
       <DialogTitle>
         <Grid2 container direction="row" justifyContent="space-between">
           <Typography variant="h6" style={{ flexGrow: 1 }}>
-        Upload Video
-      </Typography>
-      </Grid2>
-      <Grid2 item style={{ position: "absolute", right: 5, top: 5 }}>
-        <Button onClick={onClose} color="secondary">
-      <CloseIcon fontSize="large" />
-      </Button>
-      </Grid2>
-        </DialogTitle>
-      <DialogContent>
+            Upload Video
+          </Typography>
+        </Grid2>
+        <Grid2 item style={{ position: "absolute", right: 5, top: 5 }}>
+          <Button onClick={handleCancel} color="secondary">
+            <CloseIcon fontSize="large" />
+          </Button>
+        </Grid2>
+      </DialogTitle>
+      <DialogContent dividers>
         <Grid2 container direction="row" spacing={2} alignItems="center">
           <Grid2 item>
             <Typography variant="body1" gutterBottom>
@@ -99,12 +117,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
           />
         </Grid2>
 
-        <Grid2
-          container
-          direction="row"
-          spacing={2}
-          alignItems="center"
-        >
+        <Grid2 container direction="row" spacing={2} alignItems="center">
           <Grid2 item style={{ width: "30%", marginTop: 16 }}>
             <label htmlFor="upload-button">
               <Button variant="contained" component="span" fullWidth>
@@ -119,11 +132,14 @@ const FileManager = ({ open, onClose, onSubmit }) => {
               onClick={() => setFile(null)}
               fullWidth
               disabled={!file}
-              color="secondary">
+              color="secondary"
+            >
               Clear
             </Button>
           </Grid2>
         </Grid2>
+
+        <Divider style={{ margin: "1rem 0" }} />
 
         <Grid2 item>
           <TextField
@@ -131,37 +147,40 @@ const FileManager = ({ open, onClose, onSubmit }) => {
             label="Video URL"
             value={url}
             onChange={handleUrlChange}
-            margin="normal"
             disabled={file}
           />
         </Grid2>
 
         <Grid2 item>
-            {file && (
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                gutterBottom
-                style={{ marginTop: 16 }}
-              >
-                Selected File: {file.name}
-              </Typography>
-            )}
-          </Grid2>
-          
+          {file && (
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              gutterBottom
+              style={{ marginTop: 16 }}
+            >
+              Selected File: {file.name}
+            </Typography>
+          )}
+        </Grid2>
       </DialogContent>
       <DialogActions>
-        <Grid2 container direction="row" justifyContent="space-between" spacing={1}>
-        <Grid2 item>
-        <Button onClick={onClose} color="secondary" size="large">
-          Cancel
-        </Button>
-        </Grid2>
-        <Grid2 item>
-        <Button onClick={handleSubmit} color="primary" size="large">
-          Submit
-        </Button>
-        </Grid2>
+        <Grid2
+          container
+          direction="row"
+          justifyContent="space-between"
+          spacing={1}
+        >
+          <Grid2 item>
+            <Button onClick={handleCancel} color="secondary" size="large">
+              Cancel
+            </Button>
+          </Grid2>
+          <Grid2 item>
+            <Button onClick={handleSubmit} color="primary" size="large">
+              Submit
+            </Button>
+          </Grid2>
         </Grid2>
       </DialogActions>
     </Dialog>

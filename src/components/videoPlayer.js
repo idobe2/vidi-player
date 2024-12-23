@@ -1,23 +1,14 @@
 import React, { useState, useRef } from "react";
-import {
-  Container,
-  Grid2,
-  Typography,
-  Card,
-  CardMedia,
-  CardContent,
-  IconButton,
-  TextField,
-} from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import ReactPlayer from "react-player";
 import "../global.css";
 import PlayerControls from "./playerControls";
 import screenfull from "screenfull";
-import DeleteIcon from "@mui/icons-material/Delete";
+import Bookmarks from "./bookmarks";
 
 let count = 0;
 
-function VideoPlayer({ source, title }) {
+function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark }) {
   const [state, setState] = useState({
     playing: true,
     muted: true,
@@ -28,7 +19,6 @@ function VideoPlayer({ source, title }) {
   });
 
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
-  const [bookmarks, setBookmarks] = useState([]);
 
   const format = (seconds) => {
     if (isNaN(seconds)) {
@@ -150,10 +140,8 @@ function VideoPlayer({ source, title }) {
     canvas.width = videoWidth;
     canvas.height = videoHeight;
 
-    setBookmarks([
-      ...bookmarks,
-      { time: currentTime, disply: elapsedTime, image: imageUrl },
-    ]);
+    const bookmark = { time: currentTime, display: elapsedTime, image: imageUrl };
+    onAddBookmark(bookmark);
   };
 
   const deleteBookmark = (index) => {
@@ -166,6 +154,12 @@ function VideoPlayer({ source, title }) {
         i === index ? { ...bookmark, title: newTitle } : bookmark
       )
     );
+  };
+
+  const seekToBookmark = (time) => {
+    if (playerRef.current) {
+      playerRef.current.seekTo(time, "seconds");
+    }
   };
 
   const handleMouseMove = () => {
@@ -203,8 +197,7 @@ function VideoPlayer({ source, title }) {
           width={"100%"}
           height={"100%"}
           url={
-            source ||
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+            source
           }
           muted={muted}
           playing={playing}
@@ -213,13 +206,14 @@ function VideoPlayer({ source, title }) {
           onProgress={handleProgress}
           onEnded={handlePlayPause}
           config={{
-            file: { 
+            file: {
               attributes: {
                 crossOrigin: "anonymous",
               },
             },
           }}
         />
+
         <PlayerControls
           ref={controlsRef}
           onPlayPause={handlePlayPause}
@@ -246,51 +240,13 @@ function VideoPlayer({ source, title }) {
         />
       </div>
 
-      <Grid2 container style={{ marginTop: 20 }} spacing={3}>
-        {bookmarks.map((bookmark, index) => (
-          <Grid2 item key={index} xs={12} sm={6} md={4}>
-            <Card>
-              <CardMedia
-                component="img"
-                height="80"
-                image={bookmark.image}
-                alt={`Bookmark at ${format(bookmark.time)}`}
-                onClick={() => playerRef.current.seekTo(bookmark.time)}
-              />
-              <CardContent
-                style={{
-                  marginBottom: -20,
-                  marginTop: -10,
-                  paddingLeft: 5,
-                  paddingRight: 0,
-                }}
-              >
-                <Grid2 container direction={"row"} alignItems={"center"}>
-                  <Grid2 item xs={8} style={{ width: "80%" }}>
-                    <TextField
-                      variant="outlined"
-                      size="small"
-                      value={`Bookmark at ${format(bookmark.time)}`}
-                      onChange={(e) => renameBookmark(index, e.target.value)}
-                    />
-                  </Grid2>
-
-                  <Grid2 item style={{ marginRight: -15 }}>
-                    <IconButton
-                      fontSize="small"
-                      aria-label="delete"
-                      onClick={() => deleteBookmark(index)}
-                      sx={{ color: "red" }}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Grid2>
-                </Grid2>
-              </CardContent>
-            </Card>
-          </Grid2>
-        ))}
-      </Grid2>
+      <Bookmarks
+        bookmarks={bookmarks}
+        format={format}
+        onDelete={deleteBookmark}
+        onSeek={seekToBookmark}
+        onRename={renameBookmark}
+      />
 
       <canvas ref={canvasRef} />
       {/* Footer */}

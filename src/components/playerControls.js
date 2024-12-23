@@ -92,6 +92,7 @@ function PlayerControls(
         alignItems="center"
         justifyContent="center"
         spacing={3}
+        style={{ scale: 1.5 }}
       >
         <IconButton
           onClick={onRewind}

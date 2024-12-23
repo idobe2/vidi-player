@@ -7,9 +7,10 @@ import {
   CardMedia,
 } from "@mui/material";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "../global.css";
 
-const RecentVideos = ({ recentVideos, onVideoSelect }) => {
+const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -61,6 +62,12 @@ const RecentVideos = ({ recentVideos, onVideoSelect }) => {
                 style={{ marginRight: 8 }}
               />
               <Typography variant="body2">{truncateTitle(video.title, 40)}</Typography>
+              <IconButton
+                aria-label="delete"
+                onClick={() => onDeleteVideo(index)}
+              >
+                <DeleteIcon />
+              </IconButton>
             </MenuItem>
           ))
         )}

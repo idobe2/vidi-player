@@ -7,23 +7,22 @@ import {
   Button,
   Typography,
   Divider,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   Grid2,
 } from "@mui/material";
-import visualGuide from "../images/visual-guide.png";
+import CloseIcon from "@mui/icons-material/Close";
 
 const InfoDialog = ({ open, onClose }) => {
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>How to Use the Video Player</DialogTitle>
+      <Grid2 container direction="row" justifyContent="space-between">
+        <DialogTitle>How to Use the Video Player</DialogTitle>
+        <Grid2 item style={{ position: "absolute", right: 5, top: 5 }}>
+          <Button onClick={onClose} color="secondary">
+            <CloseIcon fontSize="large" />
+          </Button>
+        </Grid2>
+      </Grid2>
       <DialogContent dividers>
-
         <Typography variant="h6" gutterBottom>
           Welcome to the Vi-Di Player!
         </Typography>
@@ -32,9 +31,7 @@ const InfoDialog = ({ open, onClose }) => {
           rewinding, bookmarking, and more. Below are the instructions to help
           you get started.
         </Typography>
-
         <Divider style={{ margin: "1rem 0" }} />
-
         <Typography variant="h6" gutterBottom>
           Getting Started
         </Typography>
@@ -57,100 +54,6 @@ const InfoDialog = ({ open, onClose }) => {
           5. View recent videos by clicking the "Browse Gallery" dropdown in the
           navigation bar.
         </Typography>
-
-        <Divider style={{ margin: "1rem 0" }} />
-
-        <Grid2 item xs={6}>
-          <Typography variant="h6" gutterBottom>
-            Visual Guide
-          </Typography>
-        </Grid2>
-
-        <Grid2 item xs={6} style={{ textAlign: "center" }}>
-          <Typography variant="body2" color="textSecondary">
-            <img
-              src={visualGuide}
-              alt="Visual Guide"
-              style={{ width: "80%" }}
-            />
-          </Typography>
-        </Grid2>
-
-        <Grid2 container direction="row" spacing={2} justifyContent={"center"} marginTop={2}>
-        <Grid2 item xs={12}>
-          <TableContainer component={Paper}>
-            <Table>
-              {/* <TableHead>
-                <TableRow>
-                  <TableCell>Feature</TableCell>
-                  <TableCell>Description</TableCell>
-                </TableRow>
-              </TableHead> */}
-              <TableBody>
-                <TableRow>
-                  <TableCell>1</TableCell>
-                  <TableCell>Video title</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>2</TableCell>
-                  <TableCell>Add bookmark</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>3</TableCell>
-                  <TableCell>Rewind</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>4</TableCell>
-                  <TableCell>Play/Pause</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>5</TableCell>
-                  <TableCell>Fast forawrd</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>6</TableCell>
-                  <TableCell>Progress bar</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid2>
-
-        <Grid2 item xs={12}>
-          <TableContainer component={Paper}>
-            <Table>
-            {/* <TableHead>
-                <TableRow>
-                  <TableCell>Feature</TableCell>
-                  <TableCell>Description</TableCell>
-                </TableRow>
-              </TableHead> */}
-              <TableBody>
-                <TableRow>
-                  <TableCell>7</TableCell>
-                  <TableCell>Play/Pause</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>8</TableCell>
-                  <TableCell>Mute/Unmute</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>9</TableCell>
-                  <TableCell>Volume slider</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>10</TableCell>
-                  <TableCell>Time display</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>11</TableCell>
-                  <TableCell>Full screen</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid2>
-        </Grid2>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} color="secondary">

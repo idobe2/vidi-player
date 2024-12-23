@@ -1,6 +1,13 @@
 import React from "react";
-import { Container, Typography, Grid2, Paper, IconButton, Link } from "@mui/material";
-import { GitHub, LinkedIn } from "@mui/icons-material";
+import {
+  Container,
+  Typography,
+  Grid2,
+  Paper,
+  IconButton,
+  Link,
+} from "@mui/material";
+import { GitHub, LinkedIn, Info } from "@mui/icons-material";
 
 const About = () => {
   return (
@@ -11,14 +18,15 @@ const About = () => {
           About the Project
         </Typography>
         <Typography variant="body1">
-          Welcome to my Vi-Di Player project! This application is designed to provide
-          a seamless video playback experience, featuring advanced controls like fast-forward,
-          rewind, volume adjustments, playback rate and bookmarks. It's built with React and leverages modern
-          web technologies to ensure performance and responsiveness.
+          Welcome to my Vi-Di Player project! This application is designed to
+          provide a seamless video playback experience, featuring advanced
+          controls like fast-forward, rewind, volume adjustments, playback rate
+          and bookmarks. It's built with React and leverages modern web
+          technologies to ensure performance and responsiveness.
         </Typography>
         <Typography variant="body1">
-          The project is open-source, and contributions are welcome! Check out the links below
-          to learn more and get involved.
+          The project is open-source, and contributions are welcome! Check out
+          the links below to learn more and get involved.
         </Typography>
       </Paper>
 
@@ -30,22 +38,72 @@ const About = () => {
         <ul>
           <li>
             <Typography variant="body1">
-              Dark mode support for a modern, user-friendly interface.
+              <strong>Dark mode:</strong> Support for a sleek, modern,
+              user-friendly interface, enhancing user experience in low-light
+              environments.
             </Typography>
           </li>
           <li>
             <Typography variant="body1">
-              Bookmarking system to save your favorite video moments.
+              <strong>Bookmarking system:</strong> Save and manage your favorite
+              video moments with ease, including renaming and seeking directly
+              to bookmarked scenes.
             </Typography>
           </li>
           <li>
             <Typography variant="body1">
-              Dynamic video sources: upload files or stream via URL.
+              <strong>Dynamic video sources:</strong> Upload files from your
+              device or stream directly via URL for ultimate flexibility.
             </Typography>
           </li>
           <li>
             <Typography variant="body1">
-              Built-in support for custom themes using Material-UI.
+              <strong>Custom themes:</strong> Built-in support for Material-UI
+              theming, including light and dark modes, for a tailored visual
+              experience.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Drag-and-drop support:</strong> Easily upload video files
+              by dragging them into the player interface.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Recent videos dropdown:</strong> Quickly access and play
+              your recently viewed videos with a user-friendly dropdown menu.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Playback controls:</strong> Fully functional controls for
+              play, pause, rewind, fast-forward, volume, and fullscreen modes.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Thumbnail preview:</strong> Bookmark thumbnails
+              automatically generated for visual identification of saved scenes.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Customizable playback speed:</strong> Adjust playback
+              speed to watch videos at your preferred pace.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Responsive design:</strong> Optimized for all screen
+              sizes, ensuring a seamless experience on both desktop and mobile
+              devices.
+            </Typography>
+          </li>
+          <li>
+            <Typography variant="body1">
+              <strong>Integrated alerts:</strong> User-friendly prompts to guide
+              actions, such as file upload confirmation and bookmark management.
             </Typography>
           </li>
         </ul>
@@ -58,10 +116,17 @@ const About = () => {
         </Typography>
         <Grid2 container spacing={3} justifyContent="center">
           <Grid2 item xs={12} sm={6} md={4}>
-            <Paper style={{ padding: "1rem", textAlign: "center" }} elevation={2}>
+            <Paper
+              style={{ padding: "1rem", textAlign: "center" }}
+              elevation={2}
+            >
               <Typography variant="h6">Ido Ben Noun</Typography>
               <Typography variant="body2">Software Developer</Typography>
-              <IconButton href="https://github.com/idobe2/" target="_blank" rel="noopener noreferrer">
+              <IconButton
+                href="https://github.com/idobe2/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <GitHub />
               </IconButton>
               <IconButton
@@ -90,6 +155,16 @@ const About = () => {
               variant="body1"
             >
               <GitHub /> GitHub Repository
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="https://gist.github.com/jsturgis/3b19447b304616f18657"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="body1"
+            >
+              <Info /> Public test video URLs
             </Link>
           </li>
           {/* <li>

@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { AppBar, Toolbar, Typography, Button, Grid2 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/themeContext";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import {
+  LightMode as LightModeIcon,
+  DarkMode as DarkModeIcon,
+  AddCircleOutline as AddCircleOutlineIcon,
+  Info as InfoIcon,
+} from "@mui/icons-material";
 import FileManager from "./fileManager";
 import RecentVideos from "./recentVideos";
 import Info from "./info";
 
-const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect }) => {
+const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo }) => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [fileManagerOpen, setFileManagerOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -56,6 +59,14 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect }) => {
               </Button>
             </Grid2>
 
+            <Grid2 item>
+                <RecentVideos
+                  recentVideos={recentVideos}
+                  onVideoSelect={handleVideoSelect}
+                  onDeleteVideo={onDeleteVideo}
+                />
+              </Grid2>
+
             <Grid2
               container
               position="absolute"
@@ -65,12 +76,6 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect }) => {
               alignItems="center"
               spacing={2}
             >
-              <Grid2 item>
-                <RecentVideos
-                  recentVideos={recentVideos}
-                  onVideoSelect={handleVideoSelect}
-                />
-              </Grid2>
 
               <Grid2 item>
                 <Button color="inherit" component={Link} to="/about">
@@ -80,7 +85,7 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect }) => {
 
               <Grid2 item>
                 <Button color="inherit" onClick={handleOpenInfo}>
-                  Info
+                  <InfoIcon fontSize="large" />
                 </Button>
                 <Info open={infoOpen} onClose={handleCloseInfo} />
               </Grid2>
