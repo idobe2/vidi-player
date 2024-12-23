@@ -55,11 +55,9 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
             <MenuItem key={index} onClick={() => onVideoSelect(video)}>
               <CardMedia
                 component="img"
-                width="60px"
-                height="40px"
                 image={video.thumbnail}
                 alt={video.title}
-                style={{ marginRight: 8 }}
+                style={{ marginRight: 8, width: 100, height: 60 }}
               />
               <Typography variant="body2">{truncateTitle(video.title, 40)}</Typography>
               <IconButton

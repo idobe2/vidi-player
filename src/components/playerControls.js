@@ -132,7 +132,9 @@ function PlayerControls(
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        style={{ padding: 16 }}
+        style={{ 
+          padding: 8,
+         }}
       >
         <Grid2 item xs={12} style={{ width: "100%" }}>
           <PrettoSlider
@@ -172,9 +174,9 @@ function PlayerControls(
               </IconButton>
             </Grid2>
 
-            <Grid2 container>
+            <Grid2 container marginTop={1} direction="row" alignItems="center">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Grid2 item xs style={{ width: "100%" }}>
+                <Grid2 item xs style={{ width: 80 }}>
                   <Slider
                     min={0}
                     max={100}

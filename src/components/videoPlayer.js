@@ -8,7 +8,7 @@ import Bookmarks from "./bookmarks";
 
 let count = 0;
 
-function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark }) {
+function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, onRenameBookmark, onDeleteBookmark }) {
   const [state, setState] = useState({
     playing: true,
     muted: true,
@@ -119,6 +119,10 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark }) 
   };
 
   const addBookmark = () => {
+    if (source === "") {
+      alert("Please load a video first.");
+      return;
+    } 
     if (source.includes("youtube.com") || source.includes("youtu.be")) {
       alert("Bookmarks are not supported for YouTube videos.");
       return;
@@ -146,6 +150,7 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark }) 
 
   const deleteBookmark = (index) => {
     setBookmarks(bookmarks.filter((_, i) => i !== index));
+    onDeleteBookmark(index);
   };
 
   const renameBookmark = (index, newTitle) => {
@@ -154,6 +159,7 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark }) 
         i === index ? { ...bookmark, title: newTitle } : bookmark
       )
     );
+    onRenameBookmark(index, newTitle);
   };
 
   const seekToBookmark = (time) => {

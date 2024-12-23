@@ -1,70 +1,96 @@
-# Getting Started with Create React App
+# Vi-Di Player
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A fully featured and responsive video player built with React and Material-UI, offering advanced features like dark mode, bookmarking, and dynamic video sources. This project is designed for a seamless user experience with modern web technologies.
 
-## Available Scripts
+## Key Features
 
-In the project directory, you can run:
+- **Dark Mode:** Sleek and modern interface with light and dark mode support.
+- **Bookmarking System:** Save and manage your favorite video moments, complete with thumbnails and custom titles.
+- **Dynamic Video Sources:** Upload video files or stream directly via URL.
+- **Drag-and-Drop Support:** Easily upload video files by dragging them into the player.
+- **Recent Videos Dropdown:** Quickly access and play recently viewed videos.
+- **Playback Controls:** Fully functional controls for play, pause, rewind, fast-forward, volume, and fullscreen.
+- **Customizable Playback Speed:** Adjust playback speed for personalized viewing.
+- **Responsive Design:** Optimized for all screen sizes, ensuring a seamless experience on both desktop and mobile devices.
+- **Thumbnail Preview:** Automatically generated thumbnails for bookmarks.
+- **Integrated Alerts:** User-friendly prompts to guide actions, such as file uploads and bookmark management.
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/idobe2/vidi-player.git
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Navigate to the project directory:
+   ```bash
+   cd vidi-player
+   ```
 
-### `npm test`
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
-### `npm run build`
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Uploading Videos:**
+  - Use the "Add" button in the top bar to upload a video file or enter a URL.
+  - Drag and drop video files directly into the player.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Bookmarking:**
+  - Click the "Bookmark" button during playback to save the current video moment.
+  - Manage bookmarks in the bookmarks section, including renaming, deleting, and seeking.
 
-### `npm run eject`
+- **Recent Videos:**
+  - Access recently played videos through the dropdown in the top bar.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **Playback Controls:**
+  - Use controls for play, pause, rewind, fast-forward, volume adjustment, and fullscreen mode.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Technologies Used
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **React:** Frontend framework for building UI components.
+- **Material-UI:** UI library for responsive and modern design.
+- **React-Player:** React component for playing videos.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contribution
 
-## Learn More
+Contributions are welcome! Please follow these steps:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Make your changes and commit them:
+   ```bash
+   git commit -m "Add feature"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
 
-### Code Splitting
+This project is licensed under the [MIT License](LICENSE).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Contact
 
-### Analyzing the Bundle Size
+For any questions or feedback, feel free to reach out:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Email:** idobenoun@gmail.com
+- **GitHub:** [@idobe2](https://github.com/idobe2)
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Thank you for using Vi-Di Player! 😊

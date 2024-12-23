@@ -8,9 +8,9 @@ import {
   AddCircleOutline as AddCircleOutlineIcon,
   Info as InfoIcon,
 } from "@mui/icons-material";
-import FileManager from "./fileManager";
+import FileManager from "../dialogs/fileManager";
 import RecentVideos from "./recentVideos";
-import Info from "./info";
+import Info from "../dialogs/info";
 
 const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo }) => {
   const { isDarkMode, toggleTheme } = useTheme();

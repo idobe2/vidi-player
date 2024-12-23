@@ -4,7 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import VideoPlayer from "./components/videoPlayer";
 import { ThemeProvider } from "./context/themeContext";
 import TopBar from "./components/topBar";
-import About from "./components/about";
+import About from "./pages/about";
 import { getVideoThumbnail } from "./utils/videoUtils";
 
 function App() {
@@ -23,6 +23,7 @@ function App() {
     }
   }, []);
 
+  /* File handling */
   const handleFileSubmit = async (file, url) => {
     let newVideo = {};
     if (file) {
@@ -49,6 +50,13 @@ function App() {
     setBookmarks(video.bookmarks || []);
   };
 
+  const handleDeleteVideo = (index) => {
+    const updatedVideos = recentVideos.filter((_, i) => i !== index);
+    setRecentVideos(updatedVideos);
+    localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
+  };
+
+  /* Bookmark handling */
   const handleAddBookmark = (bookmark) => {
     const updatedBookmarks = [...bookmarks, bookmark];
     setBookmarks(updatedBookmarks);
@@ -61,8 +69,28 @@ function App() {
     localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
   };
 
-  const handleDeleteVideo = (index) => {
-    const updatedVideos = recentVideos.filter((_, i) => i !== index);
+  const handleRenameBookmark = (index, newTitle) => {
+    const updatedBookmarks = bookmarks.map((bookmark, i) =>
+      i === index ? { ...bookmark, title: newTitle } : bookmark
+    );
+    setBookmarks(updatedBookmarks);
+    const updatedVideos = recentVideos.map((video) =>
+      video.url === videoSource
+        ? { ...video, bookmarks: updatedBookmarks }
+        : video
+    );
+    setRecentVideos(updatedVideos);
+    localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
+  };
+
+  const handleDeleteBookmark = (index) => {
+    const updatedBookmarks = bookmarks.filter((_, i) => i !== index);
+    setBookmarks(updatedBookmarks);
+    const updatedVideos = recentVideos.map((video) =>
+      video.url === videoSource
+        ? { ...video, bookmarks: updatedBookmarks }
+        : video
+    );
     setRecentVideos(updatedVideos);
     localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
   };
@@ -87,6 +115,8 @@ function App() {
                 bookmarks={bookmarks}
                 setBookmarks={setBookmarks}
                 onAddBookmark={handleAddBookmark}
+                onRenameBookmark={handleRenameBookmark}
+                onDeleteBookmark={handleDeleteBookmark}
               />
             }
           />

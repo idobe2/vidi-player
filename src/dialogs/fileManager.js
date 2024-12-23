@@ -11,7 +11,7 @@ import {
   Divider,
 } from "@mui/material";
 import "../global.css";
-import DragDropZone from "./dragDropZone";
+import DragDropZone from "../components/dragDropZone";
 import CloseIcon from "@mui/icons-material/Close";
 
 const FileManager = ({ open, onClose, onSubmit }) => {
