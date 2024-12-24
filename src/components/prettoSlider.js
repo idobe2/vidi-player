@@ -9,13 +9,13 @@ const PrettoSlider = (props) => {
     <Slider
       {...props}
       sx={{
-        height: 8,
+        height: 6,
         '& .MuiSlider-track': {
           border: 'none',
         },
         '& .MuiSlider-thumb': {
-          height: 24,
-          width: 24,
+          height: 18,
+          width: 18,
           backgroundColor: theme.palette.common.white,
           border: '2px solid currentColor',
           '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
@@ -33,7 +33,7 @@ const PrettoSlider = (props) => {
           width: 32,
           height: 32,
           borderRadius: '50% 50% 50% 0',
-          backgroundColor: theme.palette.grey[700],
+          backgroundColor: theme.palette.primary.main,
           transformOrigin: 'bottom left',
           transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
           '&:before': { display: 'none' },

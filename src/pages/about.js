@@ -115,7 +115,7 @@ const About = () => {
           Contributors
         </Typography>
         <Grid2 container spacing={3} justifyContent="center">
-          <Grid2 item xs={12} sm={6} md={4}>
+          <Grid2 sm={6} md={4}>
             <Paper
               style={{ padding: "1rem", textAlign: "center" }}
               elevation={2}

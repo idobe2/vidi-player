@@ -16,7 +16,7 @@ const InfoDialog = ({ open, onClose }) => {
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Grid2 container direction="row" justifyContent="space-between">
         <DialogTitle>How to Use the Video Player</DialogTitle>
-        <Grid2 item style={{ position: "absolute", right: 5, top: 5 }}>
+        <Grid2 style={{ position: "absolute", right: 5, top: 5 }}>
           <Button onClick={onClose} color="secondary">
             <CloseIcon fontSize="large" />
           </Button>

@@ -40,7 +40,7 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo
             alignItems="center"
             spacing={2}
           >
-            <Grid2 item>
+            <Grid2>
               <Typography variant="h6" sx={{ flexGrow: 1 }}>
                 <Link to="/" style={{ color: "white", textDecoration: "none" }}>
                   Vi-Di Player
@@ -48,7 +48,7 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo
               </Typography>
             </Grid2>
 
-            <Grid2 item>
+            <Grid2>
               <Button
                 color="inherit"
                 onClick={() => {
@@ -59,7 +59,7 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo
               </Button>
             </Grid2>
 
-            <Grid2 item>
+            <Grid2>
                 <RecentVideos
                   recentVideos={recentVideos}
                   onVideoSelect={handleVideoSelect}
@@ -77,20 +77,20 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo
               spacing={2}
             >
 
-              <Grid2 item>
+              <Grid2>
                 <Button color="inherit" component={Link} to="/about">
                   About
                 </Button>
               </Grid2>
 
-              <Grid2 item>
+              <Grid2>
                 <Button color="inherit" onClick={handleOpenInfo}>
                   <InfoIcon fontSize="large" />
                 </Button>
                 <Info open={infoOpen} onClose={handleCloseInfo} />
               </Grid2>
 
-              <Grid2 item style={{}}>
+              <Grid2 style={{}}>
                 <Button color="inherit" onClick={toggleTheme}>
                   {isDarkMode ? (
                     <LightModeIcon fontSize="large" />

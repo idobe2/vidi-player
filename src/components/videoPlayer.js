@@ -83,7 +83,7 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, on
   };
 
   const handleProgress = (changeState) => {
-    console.log(changeState);
+    // console.log(changeState);
 
     if (count > 3) {
       controlsRef.current.style.visibility = "hidden";

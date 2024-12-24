@@ -93,7 +93,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
             Upload Video
           </Typography>
         </Grid2>
-        <Grid2 item style={{ position: "absolute", right: 5, top: 5 }}>
+        <Grid2 style={{ position: "absolute", right: 5, top: 5 }}>
           <Button onClick={handleCancel} color="secondary">
             <CloseIcon fontSize="large" />
           </Button>
@@ -101,7 +101,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
       </DialogTitle>
       <DialogContent dividers>
         <Grid2 container direction="row" spacing={2} alignItems="center">
-          <Grid2 item>
+          <Grid2>
             <Typography variant="body1" gutterBottom>
               Upload a video file or enter a video URL:
             </Typography>
@@ -118,7 +118,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
         </Grid2>
 
         <Grid2 container direction="row" spacing={2} alignItems="center">
-          <Grid2 item style={{ width: "30%", marginTop: 16 }}>
+          <Grid2 style={{ width: "30%", marginTop: 16 }}>
             <label htmlFor="upload-button">
               <Button variant="contained" component="span" fullWidth>
                 Choose File
@@ -126,7 +126,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
             </label>
           </Grid2>
 
-          <Grid2 item style={{ width: "30%", marginTop: 16 }}>
+          <Grid2 style={{ width: "30%", marginTop: 16 }}>
             <Button
               variant="contained"
               onClick={() => setFile(null)}
@@ -141,7 +141,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
 
         <Divider style={{ margin: "1rem 0" }} />
 
-        <Grid2 item>
+        <Grid2>
           <TextField
             fullWidth
             label="Video URL"
@@ -151,7 +151,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
           />
         </Grid2>
 
-        <Grid2 item>
+        <Grid2>
           {file && (
             <Typography
               variant="body2"
@@ -171,12 +171,12 @@ const FileManager = ({ open, onClose, onSubmit }) => {
           justifyContent="space-between"
           spacing={1}
         >
-          <Grid2 item>
+          <Grid2>
             <Button onClick={handleCancel} color="secondary" size="large">
               Cancel
             </Button>
           </Grid2>
-          <Grid2 item>
+          <Grid2>
             <Button onClick={handleSubmit} color="primary" size="large">
               Submit
             </Button>

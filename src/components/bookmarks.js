@@ -44,7 +44,7 @@ const Bookmarks = ({ bookmarks, format, onDelete, onSeek, onRename }) => {
   return (
     <Grid2 container spacing={3} style={{ marginTop: 20 }}>
       {bookmarks.map((bookmark, index) => (
-        <Grid2 item key={index} xs={12} sm={6} md={4}>
+        <Grid2 key={index} sm={6} md={4}>
           <Card>
             <CardMedia
               component="img"
@@ -63,7 +63,7 @@ const Bookmarks = ({ bookmarks, format, onDelete, onSeek, onRename }) => {
               }}
             >
               <Grid2 container direction="row" alignItems="center">
-                <Grid2 item xs={8}>
+                <Grid2>
                   <TextField
                     variant="outlined"
                     size="small"
@@ -76,7 +76,7 @@ const Bookmarks = ({ bookmarks, format, onDelete, onSeek, onRename }) => {
                     onKeyDown={(e) => handleKeyDown(e, index, e.target.value)}
                   />
                 </Grid2>
-                <Grid2 item>
+                <Grid2>
                   <IconButton
                     fontSize="small"
                     aria-label="delete"

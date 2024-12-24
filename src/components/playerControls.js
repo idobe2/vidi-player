@@ -6,7 +6,6 @@ import {
   Button,
   IconButton,
   Slider,
-  Tooltip,
 } from "@mui/material";
 import {
   Bookmark as BookmarkIcon,
@@ -21,15 +20,15 @@ import {
 import PrettoSlider from "./prettoSlider";
 import Popover from "./playbackRatePopover";
 
-function ValueLabelComponent(props) {
-  const { children, value } = props;
+// function ValueLabelComponent(props) {
+//   const { children, value } = props;
 
-  return (
-    <Tooltip enterTouchDelay={0} placement="top" title={value}>
-      {children}
-    </Tooltip>
-  );
-}
+//   return (
+//     <Tooltip enterTouchDelay={0} placement="top" title={value}>
+//       {children}
+//     </Tooltip>
+//   );
+// }
 
 function PlayerControls(
   {
@@ -57,7 +56,6 @@ function PlayerControls(
   },
   ref
 ) {
-
   return (
     <div className="controlsWrapper" ref={ref}>
       {/* Top Controls */}
@@ -68,20 +66,21 @@ function PlayerControls(
         justifyContent="space-between"
         style={{ padding: 16 }}
       >
-        <Grid2 item>
+        <Grid2>
           <Typography variant="h5" style={{ color: "#fff" }}>
             {title}
           </Typography>
         </Grid2>
 
-        <Grid2 item>
+        <Grid2>
           <Button
             onClick={onBookmark}
             variant="contained"
             color="primary"
-            startIcon={<BookmarkIcon style={{paddingLeft: 10, fontSize: "32"}}/>}
-          >
-          </Button>
+            startIcon={
+              <BookmarkIcon style={{ paddingLeft: 10, fontSize: "32" }} />
+            }
+          ></Button>
         </Grid2>
       </Grid2>
 
@@ -132,30 +131,34 @@ function PlayerControls(
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        style={{ 
+        style={{
           padding: 8,
-         }}
+        }}
       >
-        <Grid2 item xs={12} style={{ width: "100%" }}>
+        <Grid2 style={{ width: "100%", height: '30%' }}>
           <PrettoSlider
             min={0}
             max={100}
             valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={Math.floor(played * 100)}
-            ValueLabelComponent={(props) => (
-              <ValueLabelComponent {...props} value={elapsedTime} />
-            )}
+            // ValueLabelComponent={(props) => (
+            //   <ValueLabelComponent {...props} value={elapsedTime} />
+            // )}
             onChange={onSeek}
             onMouseDown={onSeekMouseDown}
             onChangeCommitted={onSeekMouseUp}
           />
         </Grid2>
 
-        <Grid2 item>
+        <Grid2>
           <Grid2 container direction="row" alignItems="center" spacing={1}>
-            <Grid2 item>
-              <IconButton onClick={onPlayPause} className="bottomIcons" sx={{ color: "white" }}>
+            <Grid2>
+              <IconButton
+                onClick={onPlayPause}
+                className="bottomIcons"
+                sx={{ color: "white" }}
+              >
                 {playing ? (
                   <PauseIcon fontSize="large" />
                 ) : (
@@ -164,7 +167,7 @@ function PlayerControls(
               </IconButton>
             </Grid2>
 
-            <Grid2 item>
+            <Grid2>
               <IconButton onClick={onMute} className="bottomIcons">
                 {muted ? (
                   <VolumeOffIcon fontSize="large" sx={{ color: "white" }} />
@@ -176,18 +179,18 @@ function PlayerControls(
 
             <Grid2 container marginTop={1} direction="row" alignItems="center">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Grid2 item xs style={{ width: 80 }}>
+                <Grid2 style={{ width: 80 }}>
                   <Slider
                     min={0}
                     max={100}
-                    defaultValue={volume * 100}
+                    value={volume * 100}
                     className="volumeSlider"
                     onChange={onVolumeChange}
                     onChangeCommitted={onVolumeSeekUp}
                   />
                 </Grid2>
 
-                <Grid2 item>
+                <Grid2>
                   <Button
                     onClick={onChangeDispayFormat}
                     variant="text"
@@ -210,7 +213,7 @@ function PlayerControls(
               position={"absolute"}
               right={20}
             >
-              <Grid2 item>
+              <Grid2>
                 <Popover
                   triggerButton={
                     <Button
@@ -226,7 +229,7 @@ function PlayerControls(
                 />
               </Grid2>
 
-              <Grid2 item>
+              <Grid2>
                 <IconButton
                   onClick={onToggleFullScreen}
                   className="bottomIcons"
