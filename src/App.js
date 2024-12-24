@@ -6,6 +6,8 @@ import { ThemeProvider } from "./context/themeContext";
 import TopBar from "./components/topBar";
 import About from "./pages/about";
 import { getVideoThumbnail } from "./utils/videoUtils";
+import { SnackbarProvider } from "./context/snackbarProvider";
+import { ConfirmProvider } from "./context/confirmProvider";
 
 function App() {
   const [videoSource, setVideoSource] = useState("");
@@ -15,6 +17,7 @@ function App() {
 
   useEffect(() => {
     const storedVideos = JSON.parse(localStorage.getItem("recentVideos")) || [];
+    console.log("Stored videos:", storedVideos);
     setRecentVideos(storedVideos);
     if (storedVideos.length > 0) {
       setVideoSource(storedVideos[0].url);
@@ -23,24 +26,37 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (recentVideos.length > 0) {
+      localStorage.setItem("recentVideos", JSON.stringify(recentVideos));
+      console.log("Updated recentVideos in localStorage:", recentVideos);
+    }
+  }, [recentVideos]);
+
   /* File handling */
   const handleFileSubmit = async (file, url) => {
     let newVideo = {};
     if (file) {
       const videoUrl = URL.createObjectURL(file);
       const thumbnail = await getVideoThumbnail(videoUrl);
+      newVideo = { title: file.name, url: videoUrl, thumbnail };
       setVideoSource(videoUrl);
       setVideoTitle(file.name);
-      newVideo = { title: file.name, url: videoUrl, thumbnail };
     } else if (url) {
       const thumbnail = await getVideoThumbnail(url);
-      setVideoSource(url);
-      const urlParts = url.split("/");
-      const title = urlParts[urlParts.length - 1];
-      setVideoTitle(title);
+      const title = url.split("/").pop();
       newVideo = { title, url, thumbnail };
+      setVideoSource(url);
+      setVideoTitle(title);
+
+      if (!recentVideos.some((video) => video.url === url)) {
+        setRecentVideos((prevVideos) => {
+          const updatedVideos = [newVideo, ...prevVideos];
+          localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
+          return updatedVideos;
+        });
+      }
     }
-    setRecentVideos((prevVideos) => [newVideo, ...prevVideos]);
     setBookmarks([]);
   };
 
@@ -51,9 +67,11 @@ function App() {
   };
 
   const handleDeleteVideo = (index) => {
-    const updatedVideos = recentVideos.filter((_, i) => i !== index);
-    setRecentVideos(updatedVideos);
-    localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
+    setRecentVideos((prevVideos) => {
+      const updatedVideos = prevVideos.filter((_, i) => i !== index);
+      localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
+      return updatedVideos;
+    });
   };
 
   /* Bookmark handling */
@@ -98,6 +116,8 @@ function App() {
   return (
     <Router>
       <ThemeProvider>
+      <SnackbarProvider>
+        <ConfirmProvider>
         <TopBar
           onFileSubmit={handleFileSubmit}
           recentVideos={recentVideos}
@@ -122,6 +142,8 @@ function App() {
           />
           <Route path="/about" element={<About />} />
         </Routes>
+        </ConfirmProvider>
+        </SnackbarProvider>
       </ThemeProvider>
     </Router>
   );

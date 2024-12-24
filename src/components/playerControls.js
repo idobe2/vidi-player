@@ -1,12 +1,6 @@
 import { forwardRef } from "react";
 import "../global.css";
-import {
-  Typography,
-  Grid2,
-  Button,
-  IconButton,
-  Slider,
-} from "@mui/material";
+import { Typography, Grid2, Button, IconButton, Slider } from "@mui/material";
 import {
   Bookmark as BookmarkIcon,
   FastRewind as FastRewindIcon,
@@ -19,16 +13,6 @@ import {
 } from "@mui/icons-material";
 import PrettoSlider from "./prettoSlider";
 import Popover from "./playbackRatePopover";
-
-// function ValueLabelComponent(props) {
-//   const { children, value } = props;
-
-//   return (
-//     <Tooltip enterTouchDelay={0} placement="top" title={value}>
-//       {children}
-//     </Tooltip>
-//   );
-// }
 
 function PlayerControls(
   {
@@ -135,16 +119,13 @@ function PlayerControls(
           padding: 8,
         }}
       >
-        <Grid2 style={{ width: "100%", height: '30%' }}>
+        <Grid2 style={{ width: "100%", height: "30%" }}>
           <PrettoSlider
             min={0}
             max={100}
             valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={Math.floor(played * 100)}
-            // ValueLabelComponent={(props) => (
-            //   <ValueLabelComponent {...props} value={elapsedTime} />
-            // )}
             onChange={onSeek}
             onMouseDown={onSeekMouseDown}
             onChangeCommitted={onSeekMouseUp}

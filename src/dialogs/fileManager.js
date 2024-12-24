@@ -13,8 +13,13 @@ import {
 import "../global.css";
 import DragDropZone from "../components/dragDropZone";
 import CloseIcon from "@mui/icons-material/Close";
+import { useSnackbar } from "../context/snackbarProvider";
+import { useConfirm } from "../context/confirmProvider";
+import "../global.css";
 
 const FileManager = ({ open, onClose, onSubmit }) => {
+  const confirm = useConfirm();
+  const showSnackbar = useSnackbar();
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
 
@@ -29,7 +34,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
       setFile(selectedFile);
       setUrl("");
     } else {
-      alert("Please select a valid video file.");
+      showSnackbar("Please select a video file.", "error");
     }
   };
 
@@ -45,17 +50,21 @@ const FileManager = ({ open, onClose, onSubmit }) => {
       setFile(null);
       setUrl("");
     } else {
-      alert("Please provide a video file or URL.");
-    }
+      showSnackbar("Please select a video file or enter a valid URL.", "error");}
   };
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     if (file) {
-      if (
-        window.confirm(
-          "You have selected a file. You will need to upload it again later if you cancel. Do you want to proceed?"
-        )
-      ) {
+      const result = await confirm(
+        "Cancel Upload",
+        "You have selected a file. You will need to upload it again later if you cancel. Do you want to proceed?",
+        [
+          { label: "No", value: false, variant: "outlined", color: "secondary" },
+          { label: "Yes", value: true, variant: "contained" },
+        ]
+      );
+  
+      if (result) {
         setFile(null);
         setUrl("");
         onClose();

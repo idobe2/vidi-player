@@ -12,7 +12,12 @@ import FileManager from "../dialogs/fileManager";
 import RecentVideos from "./recentVideos";
 import Info from "../dialogs/info";
 
-const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo }) => {
+const TopBar = ({
+  onFileSubmit,
+  recentVideos,
+  onRecentVideoSelect,
+  onDeleteVideo,
+}) => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [fileManagerOpen, setFileManagerOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -60,12 +65,12 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo
             </Grid2>
 
             <Grid2>
-                <RecentVideos
-                  recentVideos={recentVideos}
-                  onVideoSelect={handleVideoSelect}
-                  onDeleteVideo={onDeleteVideo}
-                />
-              </Grid2>
+              <RecentVideos
+                recentVideos={recentVideos}
+                onVideoSelect={handleVideoSelect}
+                onDeleteVideo={onDeleteVideo}
+              />
+            </Grid2>
 
             <Grid2
               container
@@ -76,7 +81,6 @@ const TopBar = ({ onFileSubmit, recentVideos, onRecentVideoSelect, onDeleteVideo
               alignItems="center"
               spacing={2}
             >
-
               <Grid2>
                 <Button color="inherit" component={Link} to="/about">
                   About

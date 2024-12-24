@@ -23,7 +23,7 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
 
   const truncateTitle = (title, maxLength) => {
     if (title.length > maxLength) {
-      return title.substring(0, maxLength - 3) + '...';
+      return title.substring(0, maxLength - 3) + "...";
     }
     return title;
   };
@@ -37,7 +37,7 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
         color="inherit"
         onClick={handleClick}
       >
-        <BrowseGalleryIcon fontSize="large"/>
+        <BrowseGalleryIcon fontSize="large" />
       </IconButton>
       <Menu
         id="recent-videos-menu"
@@ -59,7 +59,9 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
                 alt={video.title}
                 style={{ marginRight: 8, width: 100, height: 60 }}
               />
-              <Typography variant="body2">{truncateTitle(video.title, 40)}</Typography>
+              <Typography variant="body2">
+                {truncateTitle(video.title, 40)}
+              </Typography>
               <IconButton
                 aria-label="delete"
                 onClick={() => onDeleteVideo(index)}

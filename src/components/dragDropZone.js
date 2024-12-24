@@ -3,8 +3,10 @@ import { Box, Typography } from "@mui/material";
 import "../global.css";
 import VideoFileIcon from '@mui/icons-material/VideoFile';
 import { useTheme } from "@mui/material/styles";
+import { useSnackbar } from "../context/snackbarProvider";
 
 const DragDropZone = ({ onFileDrop }) => {
+  const showSnackbar = useSnackbar();
   const theme = useTheme();
   const [isDragging, setIsDragging] = useState(false);
 
@@ -31,7 +33,7 @@ const DragDropZone = ({ onFileDrop }) => {
       if (file.type.startsWith("video/")) {
         onFileDrop(file);
       } else {
-        alert("Please drop a valid video file.");
+        showSnackbar("Please select a video file.", "error");
       }
     }
   };

@@ -48,6 +48,8 @@ export default function PlaybackratePopover({
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}
+        disablePortal
+        container={document.body}
         anchorOrigin={{
           vertical: "top",
           horizontal: "left",

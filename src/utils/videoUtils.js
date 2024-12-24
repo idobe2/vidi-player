@@ -8,7 +8,7 @@ export const getVideoThumbnail = (videoUrl) => {
         video.src = videoUrl;
         video.crossOrigin = "anonymous";
         video.addEventListener("loadeddata", () => {
-          video.currentTime = 1;
+          video.currentTime = 2;
         });
         video.addEventListener("seeked", () => {
           const canvas = document.createElement("canvas");

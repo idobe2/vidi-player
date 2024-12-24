@@ -1,14 +1,23 @@
 import React, { useState, useRef } from "react";
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import ReactPlayer from "react-player";
 import "../global.css";
 import PlayerControls from "./playerControls";
 import screenfull from "screenfull";
 import Bookmarks from "./bookmarks";
+import { useSnackbar } from "../context/snackbarProvider";
 
 let count = 0;
 
-function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, onRenameBookmark, onDeleteBookmark }) {
+function VideoPlayer({
+  source,
+  title,
+  bookmarks,
+  setBookmarks,
+  onAddBookmark,
+  onRenameBookmark,
+  onDeleteBookmark,
+}) {
   const [state, setState] = useState({
     playing: true,
     muted: true,
@@ -17,6 +26,8 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, on
     played: 0,
     seeking: false,
   });
+
+  const showSnackbar = useSnackbar();
 
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
 
@@ -120,11 +131,11 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, on
 
   const addBookmark = () => {
     if (source === "") {
-      alert("Please load a video first.");
+      showSnackbar("Please select a video file or enter a valid URL.", "error");
       return;
-    } 
+    }
     if (source.includes("youtube.com") || source.includes("youtu.be")) {
-      alert("Bookmarks are not supported for YouTube videos.");
+      showSnackbar("Bookmarks are not supported for YouTube videos.", "error");
       return;
     }
     const canvas = canvasRef.current;
@@ -144,7 +155,11 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, on
     canvas.width = videoWidth;
     canvas.height = videoHeight;
 
-    const bookmark = { time: currentTime, display: elapsedTime, image: imageUrl };
+    const bookmark = {
+      time: currentTime,
+      display: elapsedTime,
+      image: imageUrl,
+    };
     onAddBookmark(bookmark);
   };
 
@@ -202,9 +217,7 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, on
           ref={playerRef}
           width={"100%"}
           height={"100%"}
-          url={
-            source
-          }
+          url={source}
           muted={muted}
           playing={playing}
           volume={volume}
@@ -255,15 +268,6 @@ function VideoPlayer({ source, title, bookmarks, setBookmarks, onAddBookmark, on
       />
 
       <canvas ref={canvasRef} />
-      {/* Footer */}
-      <Typography
-        variant="body2"
-        color="textSecondary"
-        align="center"
-        style={{ marginTop: "2rem" }}
-      >
-        © {new Date().getFullYear()} Vi-Di Player. All rights reserved.
-      </Typography>
     </Container>
   );
 }
