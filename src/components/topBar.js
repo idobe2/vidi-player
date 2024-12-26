@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppBar, Toolbar, Typography, Button, Grid2 } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, Grid2, Menu, MenuItem, ListItemText, ListItemAvatar, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/themeContext";
 import {
@@ -11,6 +11,8 @@ import {
 import FileManager from "../dialogs/fileManager";
 import RecentVideos from "./recentVideos";
 import Info from "../dialogs/info";
+import SearchBar from "./searchBar";
+import { searchYouTube } from "../utils/videoUtils";
 
 const TopBar = ({
   onFileSubmit,
@@ -19,8 +21,12 @@ const TopBar = ({
   onDeleteVideo,
 }) => {
   const { isDarkMode, toggleTheme } = useTheme();
+
   const [fileManagerOpen, setFileManagerOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
 
   const handleOpenInfo = () => {
     setInfoOpen(true);
@@ -31,7 +37,25 @@ const TopBar = ({
   };
 
   const handleVideoSelect = (video) => {
+    console.log("Selected video: ", video);
     onRecentVideoSelect(video);
+  };
+
+  const handleSearch = (query) => {
+    console.log("Search query: ", query);
+    searchYouTube(query)
+      .then(results => {
+        console.log("Search results: ", results);
+        setSearchResults(results);
+        setAnchorEl(document.getElementById('search-button'));
+      })
+      .catch(error => {
+        console.error("Error searching YouTube: ", error);
+      });
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -81,6 +105,25 @@ const TopBar = ({
               alignItems="center"
               spacing={2}
             >
+
+              <Grid2>
+              <SearchBar onSearch={handleSearch} />
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+      >
+        {searchResults.map((result, index) => (
+          <MenuItem key={index} onClick={() => handleVideoSelect(result)}>
+            <ListItemAvatar>
+              <Avatar src={result.thumbnail} />
+            </ListItemAvatar>
+            <ListItemText primary={result.title} secondary={result.description} />
+          </MenuItem>
+        ))}
+      </Menu>
+              </Grid2>
+
               <Grid2>
                 <Button color="inherit" component={Link} to="/about">
                   About

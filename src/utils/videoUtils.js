@@ -70,3 +70,38 @@ export const getYoutubeVideoTitle = (url) => {
       });
   });
 };
+
+export const searchYouTube = (query) => {
+  return new Promise((resolve, reject) => {
+    fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${encodeURIComponent(
+        query
+      )}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+    )
+      .then((response) => {
+        console.log("Response received:", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Data parsed:", data);
+        if (data.items && data.items.length > 0) {
+          const results = data.items.map((item) => ({
+            title: item.snippet.title,
+            description: item.snippet.description,
+            thumbnail: item.snippet.thumbnails.default.url,
+            videoId: item.id.videoId,
+            url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+          }));
+          console.log("Results:", results);
+          resolve(results);
+        } else {
+          console.log("No videos found.");
+          reject(new Error("No videos found."));
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        reject(error);
+      });
+  });
+};

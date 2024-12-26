@@ -20,7 +20,7 @@ const processFileInput = async (file) => {
 
 // Process a URL input
 const processUrlInput = async (url) => {
-  if (isYoutubeUrl(url)) {
+  if (isYoutubeUrl(url)) {  
     const videoId = getYoutubeVideoId(url);
     const embedUrl =
       "https://www.youtube.com/embed/" +
