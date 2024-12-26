@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Container } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import ReactPlayer from "react-player";
 import "../global.css";
 import PlayerControls from "./playerControls";
@@ -8,6 +8,7 @@ import Bookmarks from "./bookmarks";
 import { useSnackbar } from "../context/snackbarProvider";
 
 let count = 0;
+let repeatFlag = false;
 
 function VideoPlayer({
   source,
@@ -25,6 +26,7 @@ function VideoPlayer({
     playbackRate: 1.0,
     played: 0,
     seeking: false,
+    repeat: "off",
   });
 
   const showSnackbar = useSnackbar();
@@ -45,7 +47,7 @@ function VideoPlayer({
     return `${mm}:${ss}`;
   };
 
-  const { playing, muted, volume, playbackRate, played } = state;
+  const { playing, muted, volume, playbackRate, played, repeat } = state;
 
   const playerRef = useRef(null);
   const playerContainerRef = useRef(null);
@@ -129,13 +131,44 @@ function VideoPlayer({
     );
   };
 
+  const handleRepeat = () => {
+    if (repeat === "off") {
+      setState({ ...state, repeat: "repeat" });
+      repeatFlag = true;
+    } else if (repeat === "repeat") {
+      setState({ ...state, repeat: "repeatOne" });
+      repeatFlag = true;
+    } else {
+      setState({ ...state, repeat: "off" });
+      repeatFlag = false;
+    }
+    console.log("repeat mode: ", repeat);
+  };
+
+  const handleEnd = () => {
+    if (repeat === "repeatOne" && repeatFlag) {
+      playerRef.current.seekTo(0);
+      handlePlayPause();
+      setState({ ...state, repeat: "off" });
+      repeatFlag = false;
+    } else if (repeat === "repeat") {
+      playerRef.current.seekTo(0);
+      handlePlayPause();
+      repeatFlag = true;
+    }
+    console.log("repeat mode: ", repeat);
+  };
+
   const addBookmark = () => {
     if (source === "") {
       showSnackbar("Please select a video file or enter a valid URL.", "error");
       return;
     }
     if (source.includes("youtube.com") || source.includes("youtu.be")) {
-      showSnackbar("Bookmarks are not supported for YouTube videos.", "error");
+      showSnackbar(
+        "Bookmarks are not supported for YouTube videos yet.",
+        "error"
+      );
       return;
     }
     const canvas = canvasRef.current;
@@ -223,7 +256,8 @@ function VideoPlayer({
           volume={volume}
           playbackRate={playbackRate}
           onProgress={handleProgress}
-          onEnded={handlePlayPause}
+          onEnded={handleEnd}
+          loop={repeat === "repeat" ? true : false}
           config={{
             file: {
               attributes: {
@@ -256,17 +290,43 @@ function VideoPlayer({
           onChangeDispayFormat={handleChangeDispayFormat}
           onBookmark={addBookmark}
           title={title}
+          repeat={repeat}
+          onRepeat={handleRepeat}
         />
       </div>
-
-      <Bookmarks
-        bookmarks={bookmarks}
-        format={format}
-        onDelete={deleteBookmark}
-        onSeek={seekToBookmark}
-        onRename={renameBookmark}
-      />
-
+      <Box
+        sx={{
+          borderRadius: 4,
+          bgcolor: "box.main",
+          marginTop: 2,
+          width: "100%",
+          boxShadow: "24",
+        }}
+      >
+        <Typography variant="h6" padding={2} paddingBottom={0}>
+          Bookmarks
+        </Typography>
+        {bookmarks.length === 0 ? (
+          <Typography
+            variant="body1"
+            padding={2}
+            textAlign="center"
+            paddingBottom={16}
+            marginTop={8}
+            color="secondary.main"
+          >
+            No bookmarks added yet.
+          </Typography>
+        ) : (
+          <Bookmarks
+            bookmarks={bookmarks}
+            format={format}
+            onDelete={deleteBookmark}
+            onSeek={seekToBookmark}
+            onRename={renameBookmark}
+          />
+        )}
+      </Box>
       <canvas ref={canvasRef} />
     </Container>
   );

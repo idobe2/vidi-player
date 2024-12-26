@@ -21,19 +21,22 @@ export const ThemeProvider = ({ children }) => {
     palette: {
       mode: isDarkMode ? "dark" : "light",
       primary: {
-        main: isDarkMode ? "#4F1787" : "#1A3636", // Light and dark mode primary color
+        main: isDarkMode ? "#4F1787" : "#3F4E4F", // Light and dark mode primary color
       },
       secondary: {
-        main: isDarkMode ? "#bf80ff" : "#d32f2f", // Light and dark mode secondary color
+        main: isDarkMode ? "#bf80ff" : "#F38181", // Light and dark mode secondary color
       },
       background: {
-        default: isDarkMode ? "#1A1A1D" : "#D6BD98", // Background color for dark/light
+        default: isDarkMode ? "#1A1A1D" : "#DCD7C9", // Background color for dark/light
         paper: isDarkMode ? "#3B1C32" : "#f5f5f5", // Card or container background
       },
       text: {
-        primary: isDarkMode ? "#ffffff" : "#000000", // Default text color
+        primary: isDarkMode ? "#ffffff" : "#7D5A50", // Default text color
         secondary: isDarkMode ? "#bbbbbb" : "#333333", // Muted text color
       },
+      box: {
+        main: isDarkMode ? "#232323" : "#2C3639", // Box background color
+      }
     },
   });
 

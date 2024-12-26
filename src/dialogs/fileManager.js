@@ -49,6 +49,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
       onClose();
       setFile(null);
       setUrl("");
+      showSnackbar("Video uploaded successfully!", "success");
     } else {
       showSnackbar("Please select a video file or enter a valid URL.", "error");}
   };

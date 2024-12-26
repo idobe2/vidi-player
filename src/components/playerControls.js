@@ -10,6 +10,9 @@ import {
   VolumeUp as VolumeUpIcon,
   VolumeOff as VolumeOffIcon,
   Fullscreen as FullScreenIcon,
+  Repeat as RepeatIcon,
+  RepeatOn as RepeatOnIcon,
+  RepeatOneOn as RepeatOneOnIcon,
 } from "@mui/icons-material";
 import PrettoSlider from "./prettoSlider";
 import Popover from "./playbackRatePopover";
@@ -37,6 +40,8 @@ function PlayerControls(
     onChangeDispayFormat,
     onBookmark,
     title,
+    repeat,
+    onRepeat,
   },
   ref
 ) {
@@ -182,6 +187,20 @@ function PlayerControls(
                       {elapsedTime}/{totalDuration}
                     </Typography>
                   </Button>
+                </Grid2>
+
+                <Grid2>
+                  <IconButton
+                    onClick={onRepeat}
+                    className="bottomIcons"
+                    sx={{ color: "white" }}
+                  >
+                    {repeat === "off" && <RepeatIcon fontSize="large" />}
+                    {repeat === "repeat" && <RepeatOnIcon fontSize="large" />}
+                    {repeat === "repeatOne" && (
+                      <RepeatOneOnIcon fontSize="large" />
+                    )}
+                  </IconButton>
                 </Grid2>
               </div>
             </Grid2>
