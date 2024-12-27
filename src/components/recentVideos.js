@@ -9,6 +9,7 @@ import {
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../global.css";
+import { truncateTitle } from "../utils/videoUtils";
 
 const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -19,13 +20,6 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const truncateTitle = (title, maxLength) => {
-    if (title.length > maxLength) {
-      return title.substring(0, maxLength - 3) + "...";
-    }
-    return title;
   };
 
   return (

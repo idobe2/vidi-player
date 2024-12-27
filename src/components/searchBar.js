@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Search YouTube..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onKeyPress={(e) => {
+        onKeyDown={(e) => {
           if (e.key === 'Enter') {
             handleSearch();
           }

@@ -12,6 +12,7 @@ import {
   addBookmark,
   renameBookmark,
   deleteBookmark,
+  changeBookmarkIndex,
 } from "./utils/bookmarksManager";
 
 function App() {
@@ -22,7 +23,6 @@ function App() {
 
   useEffect(() => {
     const storedVideos = JSON.parse(localStorage.getItem("recentVideos")) || [];
-    console.log("Stored videos:", storedVideos);
     setRecentVideos(storedVideos);
     if (storedVideos.length > 0) {
       setVideoSource(storedVideos[0].url);
@@ -34,7 +34,7 @@ function App() {
   useEffect(() => {
     if (recentVideos.length > 0) {
       localStorage.setItem("recentVideos", JSON.stringify(recentVideos));
-      console.log("Updated recentVideos in localStorage:", recentVideos);
+      console.log("Stored videos:", recentVideos);
     }
   }, [recentVideos]);
 
@@ -100,6 +100,18 @@ function App() {
     );
   };
 
+  const handleChangeBookmarkIndex = (index, direction) => {
+    changeBookmarkIndex(
+      index,
+      direction,
+      bookmarks,
+      recentVideos,
+      videoSource,
+      setBookmarks,
+      setRecentVideos
+    );
+  };
+
   return (
     <Router>
       <ThemeProvider>
@@ -124,6 +136,7 @@ function App() {
                     onAddBookmark={handleAddBookmark}
                     onRenameBookmark={handleRenameBookmark}
                     onDeleteBookmark={handleDeleteBookmark}
+                    onChangeBookmarkIndex={handleChangeBookmarkIndex}
                   />
                 }
               />

@@ -158,6 +158,11 @@ const FileManager = ({ open, onClose, onSubmit }) => {
             value={url}
             onChange={handleUrlChange}
             disabled={file}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                handleSubmit();
+              }
+            }}
           />
         </Grid2>
 

@@ -12,7 +12,7 @@ import FileManager from "../dialogs/fileManager";
 import RecentVideos from "./recentVideos";
 import Info from "../dialogs/info";
 import SearchBar from "./searchBar";
-import { searchYouTube } from "../utils/videoUtils";
+import { searchYouTube, truncateTitle } from "../utils/videoUtils";
 
 const TopBar = ({
   onFileSubmit,
@@ -56,6 +56,12 @@ const TopBar = ({
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
+  };
+
+  const handleResultSelect = (result) => {
+    console.log("Selected search result: ", result);
+    onFileSubmit(null, result.url);
+    handleCloseMenu();
   };
 
   return (
@@ -114,11 +120,11 @@ const TopBar = ({
         onClose={handleCloseMenu}
       >
         {searchResults.map((result, index) => (
-          <MenuItem key={index} onClick={() => handleVideoSelect(result)}>
+          <MenuItem key={index} onClick={() => handleResultSelect(result)}>
             <ListItemAvatar>
               <Avatar src={result.thumbnail} />
             </ListItemAvatar>
-            <ListItemText primary={result.title} secondary={result.description} />
+            <ListItemText primary={result.title} secondary={truncateTitle(result.description, 40)} />
           </MenuItem>
         ))}
       </Menu>

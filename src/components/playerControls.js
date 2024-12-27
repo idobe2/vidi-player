@@ -163,9 +163,9 @@ function PlayerControls(
               </IconButton>
             </Grid2>
 
-            <Grid2 container marginTop={1} direction="row" alignItems="center">
+            <Grid2 container direction="row" alignItems="center">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Grid2 style={{ width: 80 }}>
+                <Grid2 style={{ width: 80, marginTop:5 }}>
                   <Slider
                     min={0}
                     max={100}
@@ -181,7 +181,7 @@ function PlayerControls(
                     onClick={onChangeDispayFormat}
                     variant="text"
                     className="bottomIcons"
-                    style={{ color: "#fff", marginLeft: 16 }}
+                    style={{ color: "#fff", marginLeft: 16, minWidth: 100 }}
                   >
                     <Typography>
                       {elapsedTime}/{totalDuration}

@@ -5,7 +5,6 @@ A fully featured and responsive video player built with React and Material-UI, o
 ## Key Features
 
 - **Dark Mode:** Sleek and modern interface with light and dark mode support.
-- **Bookmarking System:** Save and manage your favorite video moments, complete with thumbnails and custom titles.
 - **Dynamic Video Sources:** Upload video files or stream directly via URL.
 - **Drag-and-Drop Support:** Easily upload video files by dragging them into the player.
 - **Recent Videos Dropdown:** Quickly access and play recently viewed videos.
@@ -18,21 +17,25 @@ A fully featured and responsive video player built with React and Material-UI, o
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/idobe2/vidi-player.git
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd vidi-player
    ```
 
 3. Install dependencies:
+
    ```bash
    npm install
    ```
 
 4. Start the development server:
+
    ```bash
    npm start
    ```
@@ -45,9 +48,19 @@ A fully featured and responsive video player built with React and Material-UI, o
   - Use the "Add" button in the top bar to upload a video file or enter a URL.
   - Drag and drop video files directly into the player.
 
+- **Using the "Add" Button:**
+  - Located in the top bar, the "Add" button allows you to:
+  - Upload video files directly from your device.
+  - Enter a video URL (Youtube, etc.) for seamless streaming.
+
 - **Bookmarking:**
   - Click the "Bookmark" button during playback to save the current video moment.
   - Manage bookmarks in the bookmarks section, including renaming, deleting, and seeking.
+
+- **Manage Bookmarks:**
+  - Rename: Give your bookmarks meaningful titles for easy reference.
+  - Delete: Remove bookmarks you no longer need.
+  - Seek: Jump directly to bookmarked moments with a single click.
 
 - **Recent Videos:**
   - Access recently played videos through the dropdown in the top bar.
@@ -60,37 +73,3 @@ A fully featured and responsive video player built with React and Material-UI, o
 - **React:** Frontend framework for building UI components.
 - **Material-UI:** UI library for responsive and modern design.
 - **React-Player:** React component for playing videos.
-
-## Contribution
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Make your changes and commit them:
-   ```bash
-   git commit -m "Add feature"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For any questions or feedback, feel free to reach out:
-
-- **Email:** idobenoun@gmail.com
-- **GitHub:** [@idobe2](https://github.com/idobe2)
-
----
-
-Thank you for using Vi-Di Player! 😊

@@ -6,6 +6,7 @@ import PlayerControls from "./playerControls";
 import screenfull from "screenfull";
 import Bookmarks from "./bookmarks";
 import { useSnackbar } from "../context/snackbarProvider";
+import { useKeyboardShortcut } from "../hooks/useKeyboardShortcut";
 
 let count = 0;
 let repeatFlag = false;
@@ -18,6 +19,7 @@ function VideoPlayer({
   onAddBookmark,
   onRenameBookmark,
   onDeleteBookmark,
+  onChangeBookmarkIndex,
 }) {
   const [state, setState] = useState({
     playing: true,
@@ -238,6 +240,27 @@ function VideoPlayer({
       : `-${format(duration - currentTime)}`;
   const totalDuration = format(duration);
 
+    useKeyboardShortcut({
+      key: " ", // Space key
+      onKeyPressed: () => {
+        handlePlayPause();
+      },
+    });
+  
+    useKeyboardShortcut({
+      key: "ArrowLeft",
+      onKeyPressed: () => {
+        handleRewind();
+      },
+    });
+  
+    useKeyboardShortcut({
+      key: "ArrowRight",
+      onKeyPressed: () => {
+        handleFastForward();
+      },
+    });
+
   return (
     <Container maxWidth="md">
       <div
@@ -324,6 +347,7 @@ function VideoPlayer({
             onDelete={deleteBookmark}
             onSeek={seekToBookmark}
             onRename={renameBookmark}
+            onChangeIndex={onChangeBookmarkIndex}
           />
         )}
       </Box>
