@@ -48,7 +48,7 @@ A fully featured and responsive video player built with React and Material-UI, o
 
 - Use the **"Add"** button in the top navigation bar to upload a video file from your device or enter a video URL.
 - Drag and drop video files directly into the player interface.
-- Use the search bar to quickly find videos by name (if supported by the source).
+- Use the search bar to quickly find videos by name.
 
 ### **Playback Controls**
 
