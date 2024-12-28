@@ -124,10 +124,7 @@ const Bookmarks = ({
                     variant="standard"
                     size="small"
                     fullWidth
-                    defaultValue={
-                      bookmark.title || `Bookmark at ${format(bookmark.time)}`
-                    }
-                    value={editingValues[index]}
+                    value={editingValues[index] || `Bookmark at ${format(bookmark.time)}`}
                     onChange={(e) => handleInputChange(e, index)}
                     onKeyDown={(e) => handleKeyDown(e, index, e.target.value)}
                     disabled={selectedIndex !== index || !isEditing}

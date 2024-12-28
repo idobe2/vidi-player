@@ -18,15 +18,14 @@ const About = () => {
           About the Project
         </Typography>
         <Typography variant="body1">
-          Welcome to my Vi-Di Player project! This application is designed to
-          provide a seamless video playback experience, featuring advanced
-          controls like fast-forward, rewind, volume adjustments, playback rate
-          and bookmarks. It's built with React and leverages modern web
-          technologies to ensure performance and responsiveness.
+          Welcome to <strong>Vi-Di Player</strong>, a modern video player
+          designed to provide a seamless video playback experience with advanced
+          controls and user-friendly features.
         </Typography>
         <Typography variant="body1">
-          The project is open-source, and contributions are welcome! Check out
-          the links below to learn more and get involved.
+          Built with cutting-edge tools like <strong>Material-UI</strong>,
+          <strong> React Player</strong>, and the <strong>YouTube API</strong>,
+          Vi-Di Player is optimized for performance and ease of use.
         </Typography>
       </Paper>
 
@@ -45,9 +44,9 @@ const About = () => {
           </li>
           <li>
             <Typography variant="body1">
-              <strong>Bookmarking system:</strong> Save and manage your favorite
-              video moments with ease, including renaming and seeking directly
-              to bookmarked scenes.
+              <strong>Bookmarking System:</strong> Manage your favorite video
+              moments with the ability to rename, delete, and reorder bookmarks.
+              Jump directly to saved scenes with one click.
             </Typography>
           </li>
           <li>
@@ -65,14 +64,8 @@ const About = () => {
           </li>
           <li>
             <Typography variant="body1">
-              <strong>Drag-and-drop support:</strong> Easily upload video files
-              by dragging them into the player interface.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body1">
-              <strong>Recent videos dropdown:</strong> Quickly access and play
-              your recently viewed videos with a user-friendly dropdown menu.
+              <strong>Recent videos:</strong> Quickly access and play your
+              recently viewed videos with a user-friendly dropdown menu.
             </Typography>
           </li>
           <li>
@@ -83,14 +76,9 @@ const About = () => {
           </li>
           <li>
             <Typography variant="body1">
-              <strong>Thumbnail preview:</strong> Bookmark thumbnails
-              automatically generated for visual identification of saved scenes.
-            </Typography>
-          </li>
-          <li>
-            <Typography variant="body1">
-              <strong>Customizable playback speed:</strong> Adjust playback
-              speed to watch videos at your preferred pace.
+              <strong>Thumbnail preview:</strong> Videos and bookmarks display a
+              preview image for easy identification. Use bookmarks to jump
+              straight to a saved scene.
             </Typography>
           </li>
           <li>
@@ -103,7 +91,7 @@ const About = () => {
           <li>
             <Typography variant="body1">
               <strong>Integrated alerts:</strong> User-friendly prompts to guide
-              actions, such as file upload confirmation and bookmark management.
+              actions, using snackbar alerts to provide helpful prompts.
             </Typography>
           </li>
         </ul>

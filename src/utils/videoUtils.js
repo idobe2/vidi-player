@@ -1,8 +1,10 @@
 const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
-export const isYoutubeUrl = (url) => /youtube\.com|youtu\.be/.test(url);
+// Check if a URL is a YouTube URL
+const isYoutubeUrl = (url) => /youtube\.com|youtu\.be/.test(url);
 
-export const getYoutubeVideoTitle = (url) => {
+// Get the title of a YouTube video
+const getYoutubeVideoTitle = async (url) => {
   return new Promise((resolve, reject) => {
     const videoId = getYoutubeVideoId(url);
     const kind = detectKind(url);
@@ -36,7 +38,6 @@ export const getYoutubeVideoTitle = (url) => {
       .then((data) => {
         if (data.items && data.items.length > 0) {
           const title = data.items[0].snippet.title;
-          console.log(`Title: ${title}`);
           resolve(title);
         } else {
           reject(new Error("Title not found."));
@@ -49,10 +50,11 @@ export const getYoutubeVideoTitle = (url) => {
 };
 
 // Helper function to extract item ID from a YouTube URL
-export const getYoutubeVideoId = (url) => {
+const getYoutubeVideoId = (url) => {
   const urlObj = new URL(url);
   const videoId = urlObj.searchParams.get("v");
   if (videoId) return videoId;
+  if (urlObj.hostname === "youtu.be") return urlObj.pathname.substring(1);
 
   const pathSegments = urlObj.pathname.split("/");
   if (pathSegments.includes("channel"))
@@ -62,6 +64,14 @@ export const getYoutubeVideoId = (url) => {
   throw new Error("Invalid YouTube URL.");
 };
 
+// Helper function to extract playlist ID from a YouTube URL
+const getYoutubePlaylistId = (url) => {
+  const urlObj = new URL(url);
+  const pathSegments = urlObj.pathname.split("/");
+  if (pathSegments.includes("playlist")) return urlObj.searchParams.get("list");
+  return null;
+};
+
 // Helper function to detect the kind of YouTube item
 const detectKind = (url) => {
   const urlObj = new URL(url);
@@ -69,22 +79,58 @@ const detectKind = (url) => {
 
   if (pathSegments.includes("channel")) return "youtube#channel";
   if (pathSegments.includes("playlist")) return "youtube#playlist";
-  if (urlObj.searchParams.get("v")) return "youtube#video";
+  // if (urlObj.searchParams.get("v")) return "youtube#video";
 
-  return null;
+  return "youtube#video";
 };
 
-export const getVideoThumbnail = (videoUrl) => {
+// Get the thumbnail of a video
+const getVideoThumbnail = async (videoUrl) => {
   return new Promise((resolve, reject) => {
-    // Get the thumbnail of a YouTube video
     if (isYoutubeUrl(videoUrl)) {
-      resolve(
-        `https://img.youtube.com/vi/${getYoutubeVideoId(videoUrl)}/0.jpg`
-      );
-    }
+      // Handle YouTube video URLs
+      try {
+        const kind = detectKind(videoUrl);
 
-    // Get the thumbnail of a video file
-    else {
+        switch (kind) {
+          case "youtube#video":
+            const videoId = getYoutubeVideoId(videoUrl);
+            resolve(`https://img.youtube.com/vi/${videoId}/0.jpg`);
+            break;
+
+          case "youtube#playlist":
+            const playlistId = getYoutubePlaylistId(videoUrl);
+            fetch(
+              `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
+            )
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(
+                    `Error fetching playlist data: ${response.statusText}`
+                  );
+                }
+                return response.json();
+              })
+              .then((data) => {
+                if (data.items && data.items.length > 0) {
+                  resolve(data.items[0].snippet.thumbnails.default.url);
+                } else {
+                  reject(new Error("Thumbnail not found for the playlist."));
+                }
+              })
+              .catch((error) => {
+                reject(error);
+              });
+            break;
+
+          default:
+            reject(new Error("Unsupported YouTube URL type."));
+        }
+      } catch (error) {
+        reject(error);
+      }
+    } else {
+      // Handle non-YouTube video files
       const video = document.createElement("video");
       video.src = videoUrl;
       video.crossOrigin = "anonymous";
@@ -110,7 +156,8 @@ export const getVideoThumbnail = (videoUrl) => {
   });
 };
 
-export const searchYouTube = (query) => {
+// Search YouTube for videos, playlists, and channels
+const searchYouTube = async (query) => {
   return new Promise((resolve, reject) => {
     fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${encodeURIComponent(
@@ -118,11 +165,9 @@ export const searchYouTube = (query) => {
       )}&key=${process.env.REACT_APP_GOOGLE_API_KEY}`
     )
       .then((response) => {
-        console.log("Response received:", response);
         return response.json();
       })
       .then((data) => {
-        console.log("Data parsed:", data);
         if (data.items && data.items.length > 0) {
           const results = data.items.map((item) => {
             const { kind } = item.id;
@@ -166,10 +211,8 @@ export const searchYouTube = (query) => {
 
           // Filter out any null results from unknown kinds
           const filteredResults = results.filter((result) => result !== null);
-          console.log("Results:", filteredResults);
           resolve(filteredResults);
         } else {
-          console.log("No items found.");
           reject(new Error("No items found."));
         }
       })
@@ -180,9 +223,20 @@ export const searchYouTube = (query) => {
   });
 };
 
-export const truncateTitle = (title, maxLength) => {
+const truncateTitle = (title, maxLength) => {
   if (title.length > maxLength) {
     return title.substring(0, maxLength - 3) + "...";
   }
   return title;
+};
+
+export {
+  isYoutubeUrl,
+  getYoutubeVideoTitle,
+  getYoutubeVideoId,
+  getYoutubePlaylistId,
+  detectKind,
+  getVideoThumbnail,
+  searchYouTube,
+  truncateTitle,
 };

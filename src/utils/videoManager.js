@@ -3,6 +3,8 @@ import {
   getYoutubeVideoTitle,
   isYoutubeUrl,
   getYoutubeVideoId,
+  getYoutubePlaylistId,
+  detectKind,
 } from "../utils/videoUtils";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -20,18 +22,46 @@ const processFileInput = async (file) => {
 
 // Process a URL input
 const processUrlInput = async (url) => {
-  if (isYoutubeUrl(url)) {  
-    const videoId = getYoutubeVideoId(url);
-    const embedUrl =
-      "https://www.youtube.com/embed/" +
-      videoId +
-      "?showinfo=0&enablejsapi=1&origin=" +
-      BASE_URL;
-    const title = await getYoutubeVideoTitle(url);
+  if (isYoutubeUrl(url)) {
+    const kind = detectKind(url);
+
+    let videoId;
+    let embedUrl;
+    let title;
+
+    switch (kind) {
+      case "youtube#video":
+        videoId = getYoutubeVideoId(url);
+        embedUrl = `https://www.youtube.com/embed/${videoId}?showinfo=0&enablejsapi=1&origin=${BASE_URL}`;
+        title = await getYoutubeVideoTitle(url);
+        break;
+
+      case "youtube#playlist":
+        videoId = getYoutubePlaylistId(url);
+        embedUrl = `https://www.youtube.com/embed/videoseries?list=${videoId}`;
+        title = await getYoutubeVideoTitle(url);
+        break;
+
+      case "youtube#channel":
+        throw new Error(
+          "Channel URLs are not supported. Please use a video or playlist URL."
+        );
+
+      default:
+        throw new Error("Unsupported YouTube URL.");
+    }
+
+    let thumbnail;
+    if (kind === "youtube#video") {
+      thumbnail = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+    } else {
+      thumbnail = await getVideoThumbnail(url);
+    }
+
     return {
       title,
       url: embedUrl,
-      thumbnail: `https://img.youtube.com/vi/${videoId}/0.jpg`,
+      thumbnail,
     };
   } else {
     const title = url.split("/").pop();

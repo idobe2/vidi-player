@@ -98,8 +98,6 @@ function VideoPlayer({
   };
 
   const handleProgress = (changeState) => {
-    // console.log(changeState);
-
     if (count > 3) {
       controlsRef.current.style.visibility = "hidden";
       count = 0;
@@ -169,7 +167,7 @@ function VideoPlayer({
     if (source.includes("youtube.com") || source.includes("youtu.be")) {
       showSnackbar(
         "Bookmarks are not supported for YouTube videos yet.",
-        "error"
+        "info"
       );
       return;
     }
@@ -240,26 +238,26 @@ function VideoPlayer({
       : `-${format(duration - currentTime)}`;
   const totalDuration = format(duration);
 
-    useKeyboardShortcut({
-      key: " ", // Space key
-      onKeyPressed: () => {
-        handlePlayPause();
-      },
-    });
-  
-    useKeyboardShortcut({
-      key: "ArrowLeft",
-      onKeyPressed: () => {
-        handleRewind();
-      },
-    });
-  
-    useKeyboardShortcut({
-      key: "ArrowRight",
-      onKeyPressed: () => {
-        handleFastForward();
-      },
-    });
+  useKeyboardShortcut({
+    key: " ",
+    onKeyPressed: () => {
+      handlePlayPause();
+    },
+  });
+
+  useKeyboardShortcut({
+    key: "ArrowLeft",
+    onKeyPressed: () => {
+      handleRewind();
+    },
+  });
+
+  useKeyboardShortcut({
+    key: "ArrowRight",
+    onKeyPressed: () => {
+      handleFastForward();
+    },
+  });
 
   return (
     <Container maxWidth="md">
@@ -281,10 +279,12 @@ function VideoPlayer({
           onProgress={handleProgress}
           onEnded={handleEnd}
           loop={repeat === "repeat" ? true : false}
+          
           config={{
             file: {
               attributes: {
                 crossOrigin: "anonymous",
+                origin: process.env.REACT_APP_BASE_URl
               },
             },
           }}

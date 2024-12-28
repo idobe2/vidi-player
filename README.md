@@ -8,11 +8,11 @@ A fully featured and responsive video player built with React and Material-UI, o
 - **Dynamic Video Sources:** Upload video files or stream directly via URL.
 - **Drag-and-Drop Support:** Easily upload video files by dragging them into the player.
 - **Recent Videos Dropdown:** Quickly access and play recently viewed videos.
-- **Playback Controls:** Fully functional controls for play, pause, rewind, fast-forward, volume, and fullscreen.
-- **Customizable Playback Speed:** Adjust playback speed for personalized viewing.
+- **Playback Controls:** Fully functional controls for play, pause, rewind, fast-forward, volume, playback speed, repeat and fullscreen.
 - **Responsive Design:** Optimized for all screen sizes, ensuring a seamless experience on both desktop and mobile devices.
-- **Thumbnail Preview:** Automatically generated thumbnails for bookmarks.
+- **Thumbnail Preview:** Automatically generated thumbnails for videos and bookmarks.
 - **Integrated Alerts:** User-friendly prompts to guide actions, such as file uploads and bookmark management.
+
 
 ## Installation
 
@@ -44,29 +44,38 @@ A fully featured and responsive video player built with React and Material-UI, o
 
 ## Usage
 
-- **Uploading Videos:**
-  - Use the "Add" button in the top bar to upload a video file or enter a URL.
-  - Drag and drop video files directly into the player.
+### **Uploading Videos**
 
-- **Using the "Add" Button:**
-  - Located in the top bar, the "Add" button allows you to:
-  - Upload video files directly from your device.
-  - Enter a video URL (Youtube, etc.) for seamless streaming.
+- Use the **"Add"** button in the top navigation bar to upload a video file from your device or enter a video URL.
+- Drag and drop video files directly into the player interface.
+- Use the search bar to quickly find videos by name (if supported by the source).
 
-- **Bookmarking:**
-  - Click the "Bookmark" button during playback to save the current video moment.
-  - Manage bookmarks in the bookmarks section, including renaming, deleting, and seeking.
+### **Playback Controls**
 
-- **Manage Bookmarks:**
-  - Rename: Give your bookmarks meaningful titles for easy reference.
-  - Delete: Remove bookmarks you no longer need.
-  - Seek: Jump directly to bookmarked moments with a single click.
+- Use the bottom control panel for the following:
+  - **Play/Pause**: Start or stop playback.
+  - **Rewind/Fast-Forward**: Skip backward or forward by 10-second intervals.
+  - **Volume Adjustment**: Increase or decrease the sound level.
+  - **Playback Speed**: Watch videos at your preferred pace.
+  - **Fullscreen Mode**: Maximize the player for an immersive experience.
+  - **Repeat**: Enable repeat mode to loop videos seamlessly.
 
-- **Recent Videos:**
-  - Access recently played videos through the dropdown in the top bar.
+### **Bookmarking**
 
-- **Playback Controls:**
-  - Use controls for play, pause, rewind, fast-forward, volume adjustment, and fullscreen mode.
+- While watching a video, click the **"Bookmark"** button to save the current video moment.
+- Manage bookmarks from the bookmarks section:
+  - **Rename**: Assign custom names to bookmarks for easier identification.
+  - **Delete**: Remove unwanted bookmarks.
+  - **Seek**: Jump directly to the bookmarked moments with a single click.
+
+### **Recent Videos**
+
+- Access recently played videos from the **"Browse Gallery"** dropdown in the top navigation bar.
+- Remove unwanted entries directly from the dropdown menu.
+
+### **Dark Mode**
+
+- Toggle dark mode from the top bar to switch between themes.
 
 ## Technologies Used
 
