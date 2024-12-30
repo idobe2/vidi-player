@@ -7,20 +7,12 @@ import screenfull from "screenfull";
 import Bookmarks from "./bookmarks";
 import { useSnackbar } from "../context/snackbarProvider";
 import { useKeyboardShortcut } from "../hooks/useKeyboardShortcut";
+import { useVideoContext } from "../context/videoContext";
 
 let count = 0;
 let repeatFlag = false;
 
-function VideoPlayer({
-  source,
-  title,
-  bookmarks,
-  setBookmarks,
-  onAddBookmark,
-  onRenameBookmark,
-  onDeleteBookmark,
-  onChangeBookmarkIndex,
-}) {
+function VideoPlayer({ source, title }) {
   const [state, setState] = useState({
     playing: true,
     muted: true,
@@ -32,6 +24,13 @@ function VideoPlayer({
   });
 
   const showSnackbar = useSnackbar();
+  const {
+    bookmarks,
+    addBookmark,
+    updateBookmarks,
+    renameBookmark,
+    changeBookmarkIndex,
+  } = useVideoContext();
 
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
 
@@ -166,7 +165,7 @@ function VideoPlayer({
     console.log("repeat mode: ", repeat);
   };
 
-  const addBookmark = () => {
+  const handleAddBookmark = () => {
     if (source === "") {
       showSnackbar("Please select a video file or enter a valid URL.", "error");
       return;
@@ -200,21 +199,7 @@ function VideoPlayer({
       display: elapsedTime,
       image: imageUrl,
     };
-    onAddBookmark(bookmark);
-  };
-
-  const deleteBookmark = (index) => {
-    setBookmarks(bookmarks.filter((_, i) => i !== index));
-    onDeleteBookmark(index);
-  };
-
-  const renameBookmark = (index, newTitle) => {
-    setBookmarks((prevBookmarks) =>
-      prevBookmarks.map((bookmark, i) =>
-        i === index ? { ...bookmark, title: newTitle } : bookmark
-      )
-    );
-    onRenameBookmark(index, newTitle);
+    addBookmark(bookmark);
   };
 
   const seekToBookmark = (time) => {
@@ -275,7 +260,7 @@ function VideoPlayer({
         onDoubleClick={handleDoubleClick}
       >
         <ReactPlayer
-          playsinline 
+          playsinline
           ref={playerRef}
           width={"100%"}
           height={"100%"}
@@ -287,12 +272,11 @@ function VideoPlayer({
           onProgress={handleProgress}
           onEnded={handleEnd}
           loop={repeat === "repeat" ? true : false}
-          
           config={{
             file: {
               attributes: {
                 crossOrigin: "anonymous",
-                origin: process.env.REACT_APP_BASE_URl
+                origin: process.env.REACT_APP_BASE_URl,
               },
             },
           }}
@@ -319,7 +303,7 @@ function VideoPlayer({
           elapsedTime={elapsedTime}
           totalDuration={totalDuration}
           onChangeDispayFormat={handleChangeDispayFormat}
-          onBookmark={addBookmark}
+          onBookmark={handleAddBookmark}
           title={title}
           repeat={repeat}
           onRepeat={handleRepeat}
@@ -352,10 +336,12 @@ function VideoPlayer({
           <Bookmarks
             bookmarks={bookmarks}
             format={format}
-            onDelete={deleteBookmark}
+            onDelete={(index) =>
+              updateBookmarks(bookmarks.filter((_, i) => i !== index))
+            }
             onSeek={seekToBookmark}
             onRename={renameBookmark}
-            onChangeIndex={onChangeBookmarkIndex}
+            onChangeIndex={changeBookmarkIndex}
           />
         )}
       </Box>

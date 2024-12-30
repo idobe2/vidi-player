@@ -1,147 +1,70 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import VideoPlayer from "./components/videoPlayer";
 import { ThemeProvider } from "./context/themeContext";
+import { VideoProvider, useVideoContext } from "./context/videoContext";
 import TopBar from "./components/topBar";
 import About from "./pages/about";
 import { SnackbarProvider } from "./context/snackbarProvider";
 import { ConfirmProvider } from "./context/confirmProvider";
-import { handleFileSubmit } from "./utils/videoManager";
-import {
-  addBookmark,
-  renameBookmark,
-  deleteBookmark,
-  changeBookmarkIndex,
-} from "./utils/bookmarksManager";
 
-function App() {
-  const [videoSource, setVideoSource] = useState("");
-  const [videoTitle, setVideoTitle] = useState("Video");
-  const [recentVideos, setRecentVideos] = useState([]);
-  const [bookmarks, setBookmarks] = useState([]);
+function AppContent() {
+  const {
+    videoSource,
+    videoTitle,
+    bookmarks,
+    recentVideos,
+    setVideoSource,
+    deleteVideo,
+    submitVideo,
+  } = useVideoContext();
 
   useEffect(() => {
     const storedVideos = JSON.parse(localStorage.getItem("recentVideos")) || [];
-    setRecentVideos(storedVideos);
     if (storedVideos.length > 0) {
-      setVideoSource(storedVideos[0].url);
-      setVideoTitle(storedVideos[0].title);
-      setBookmarks(storedVideos[0].bookmarks || []);
+      const { url, title, bookmarks } = storedVideos[0];
+      setVideoSource(url, title, bookmarks);
     }
-  }, []);
+  }, [setVideoSource]);
 
-  useEffect(() => {
-    if (recentVideos.length > 0) {
-      localStorage.setItem("recentVideos", JSON.stringify(recentVideos));
-      console.log("Stored videos:", recentVideos);
-    }
-  }, [recentVideos]);
+  return (
+    <>
+      <TopBar
+        recentVideos={recentVideos}
+        onRecentVideoSelect={(video) =>
+          setVideoSource(video.url, video.title, video.bookmarks)
+        }
+        onDeleteVideo={deleteVideo}
+        onFileSubmit={(file, url) => submitVideo(file, url)}
+      />
+      <Toolbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <VideoPlayer
+              source={videoSource}
+              title={videoTitle}
+              bookmarks={bookmarks}
+            />
+          }
+        />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </>
+  );
+}
 
-  /* File handling */
-  const onFileSubmit = (file, url) => {
-    handleFileSubmit(
-      file,
-      url,
-      recentVideos,
-      setRecentVideos,
-      setVideoSource,
-      setVideoTitle,
-      setBookmarks
-    );
-  };
-
-  const handleVideoSelect = (video) => {
-    setVideoSource(video.url);
-    setVideoTitle(video.title);
-    setBookmarks(video.bookmarks || []);
-  };
-
-  const handleDeleteVideo = (index) => {
-    setRecentVideos((prevVideos) => {
-      const updatedVideos = prevVideos.filter((_, i) => i !== index);
-      localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
-      return updatedVideos;
-    });
-  };
-
-  /* Bookmark handling */
-  const handleAddBookmark = (bookmark) => {
-    addBookmark(
-      bookmark,
-      bookmarks,
-      recentVideos,
-      videoSource,
-      setBookmarks,
-      setRecentVideos
-    );
-  };
-
-  const handleRenameBookmark = (index, newTitle) => {
-    renameBookmark(
-      index,
-      newTitle,
-      bookmarks,
-      recentVideos,
-      videoSource,
-      setBookmarks,
-      setRecentVideos
-    );
-  };
-
-  const handleDeleteBookmark = (index) => {
-    deleteBookmark(
-      index,
-      bookmarks,
-      recentVideos,
-      videoSource,
-      setBookmarks,
-      setRecentVideos
-    );
-  };
-
-  const handleChangeBookmarkIndex = (index, direction) => {
-    changeBookmarkIndex(
-      index,
-      direction,
-      bookmarks,
-      recentVideos,
-      videoSource,
-      setBookmarks,
-      setRecentVideos
-    );
-  };
-
+function App() {
   return (
     <Router>
       <ThemeProvider>
         <SnackbarProvider>
           <ConfirmProvider>
-            <TopBar
-              onFileSubmit={onFileSubmit}
-              recentVideos={recentVideos}
-              onRecentVideoSelect={handleVideoSelect}
-              onDeleteVideo={handleDeleteVideo}
-            />
-            <Toolbar />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <VideoPlayer
-                    source={videoSource}
-                    title={videoTitle}
-                    bookmarks={bookmarks}
-                    setBookmarks={setBookmarks}
-                    onAddBookmark={handleAddBookmark}
-                    onRenameBookmark={handleRenameBookmark}
-                    onDeleteBookmark={handleDeleteBookmark}
-                    onChangeBookmarkIndex={handleChangeBookmarkIndex}
-                  />
-                }
-              />
-              <Route path="/about" element={<About />} />
-            </Routes>
+            <VideoProvider>
+              <AppContent />
+            </VideoProvider>
           </ConfirmProvider>
         </SnackbarProvider>
       </ThemeProvider>

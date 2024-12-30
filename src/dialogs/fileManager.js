@@ -16,12 +16,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useSnackbar } from "../context/snackbarProvider";
 import { useConfirm } from "../context/confirmProvider";
 import "../global.css";
+import { useVideoContext } from "../context/videoContext";
+
 
 const FileManager = ({ open, onClose, onSubmit }) => {
   const confirm = useConfirm();
   const showSnackbar = useSnackbar();
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState("");
+  const { submitVideo } = useVideoContext();
 
   const handleFileDrop = (droppedFile) => {
     setFile(droppedFile);
@@ -45,7 +48,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
 
   const handleSubmit = () => {
     if (file || (url && isValidUrl(url))) {
-      onSubmit(file, url);
+      submitVideo(file, url);
       onClose();
       setFile(null);
       setUrl("");
