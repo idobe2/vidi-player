@@ -55,7 +55,7 @@ function PlayerControls(
         justifyContent="space-between"
         style={{ padding: 16 }}
       >
-        <Grid2>
+        <Grid2 sx={{ width: { xs: "80%", sm: "90%" } }}>
           <Typography variant="h5" style={{ color: "#fff" }}>
             {title}
           </Typography>
@@ -120,8 +120,11 @@ function PlayerControls(
         direction="row"
         justifyContent="space-between"
         alignItems="center"
-        style={{
-          padding: 8,
+        sx={{
+          p: { xs: 0, sm: "auto" },
+          pl: { xs: 1, sm: "auto" },
+          pr: { xs: 1, sm: "auto" },
+          pt: { xs: 1, sm: "auto" },
         }}
       >
         <Grid2 style={{ width: "100%", height: "30%" }}>
@@ -143,7 +146,7 @@ function PlayerControls(
               <IconButton
                 onClick={onPlayPause}
                 className="bottomIcons"
-                sx={{ color: "white" }}
+                sx={{ color: "white", mr: { xs: -1, sm: "auto" }}}
               >
                 {playing ? (
                   <PauseIcon fontSize="large" />
@@ -165,7 +168,10 @@ function PlayerControls(
 
             <Grid2 container direction="row" alignItems="center">
               <div style={{ display: "flex", alignItems: "center" }}>
-                <Grid2 style={{ width: 80, marginTop:5 }}>
+                <Grid2
+                  style={{ width: 80, marginTop: 5 }}
+                  sx={{ pr: { xs: 2, sm: "auto" }, ml: { xs: "auto", sm: 2 } }}
+                >
                   <Slider
                     min={0}
                     max={100}
@@ -176,31 +182,20 @@ function PlayerControls(
                   />
                 </Grid2>
 
-                <Grid2>
+                <Grid2 sx={{ ml: { xs: -1, sm: 3} }}>
                   <Button
                     onClick={onChangeDispayFormat}
                     variant="text"
                     className="bottomIcons"
-                    style={{ color: "#fff", marginLeft: 16, minWidth: 100 }}
+                    style={{ color: "#fff", marginLeft: 16, minWidth: 100, right: 30 }}
+                    sx={{
+                      ml: { xs: 4, sm: "auto" },
+                    }}
                   >
                     <Typography>
                       {elapsedTime}/{totalDuration}
                     </Typography>
                   </Button>
-                </Grid2>
-
-                <Grid2>
-                  <IconButton
-                    onClick={onRepeat}
-                    className="bottomIcons"
-                    sx={{ color: "white" }}
-                  >
-                    {repeat === "off" && <RepeatIcon fontSize="large" />}
-                    {repeat === "repeat" && <RepeatOnIcon fontSize="large" />}
-                    {repeat === "repeatOne" && (
-                      <RepeatOneOnIcon fontSize="large" />
-                    )}
-                  </IconButton>
                 </Grid2>
               </div>
             </Grid2>
@@ -211,17 +206,43 @@ function PlayerControls(
               alignItems="center"
               spacing={1}
               position={"absolute"}
-              right={20}
+              sx={{
+                pr: { xs: 0, sm: "auto" },
+                right: { xs: 0, sm: 20 },
+              }}
             >
               <Grid2>
+                <IconButton
+                  onClick={onRepeat}
+                  className="bottomIcons"
+                  sx={{
+                    color: "white",
+                    mr: { xs: -3, sm: "auto" },
+                  }}
+                >
+                  {repeat === "off" && <RepeatIcon fontSize="large" />}
+                  {repeat === "repeat" && <RepeatOnIcon fontSize="large" />}
+                  {repeat === "repeatOne" && (
+                    <RepeatOneOnIcon fontSize="large" />
+                  )}
+                </IconButton>
+              </Grid2>
+
+              <Grid2
+                sx={{
+                  mr: { xs: -2, sm: "auto" },
+                }}
+              >
                 <Popover
                   triggerButton={
                     <Button
                       variant="text"
                       className="bottomIcons"
-                      style={{ marginLeft: 24 }}
+                      style={{ color: "#fff" }}
                     >
-                      <Typography>{playbackRate}X</Typography>
+                      <Typography>
+                        <strong>{playbackRate}X</strong>
+                      </Typography>
                     </Button>
                   }
                   onRateChange={onPlaybackRateChange}
@@ -229,7 +250,7 @@ function PlayerControls(
                 />
               </Grid2>
 
-              <Grid2>
+              <Grid2 sx={{ mr: { xs: 0, sm: "auto" } }}>
                 <IconButton
                   onClick={onToggleFullScreen}
                   className="bottomIcons"

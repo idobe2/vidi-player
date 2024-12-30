@@ -127,8 +127,8 @@ const FileManager = ({ open, onClose, onSubmit }) => {
           />
         </Grid2>
 
-        <Grid2 container direction="row" spacing={2} alignItems="center">
-          <Grid2 style={{ width: "30%", marginTop: 16 }}>
+        <Grid2 container direction="row" spacing={2} alignItems="center" justifyContent={"center"}>
+          <Grid2 style={{ width: "40%", marginTop: 16 }}>
             <label htmlFor="upload-button">
               <Button variant="contained" component="span" fullWidth>
                 Choose File
@@ -136,7 +136,7 @@ const FileManager = ({ open, onClose, onSubmit }) => {
             </label>
           </Grid2>
 
-          <Grid2 style={{ width: "30%", marginTop: 16 }}>
+          <Grid2 style={{ width: "40%", marginTop: 16 }}>
             <Button
               variant="contained"
               onClick={() => setFile(null)}

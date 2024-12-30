@@ -10,6 +10,14 @@ const PrettoSlider = (props) => {
       {...props}
       sx={{
         height: 6,
+        marginTop: {
+          xs: 1,
+          sm: 2,
+        },
+        marginBottom: {
+          xs: -3,
+          sm: "auto",
+        },
         "& .MuiSlider-track": {
           border: "none",
         },

@@ -89,7 +89,14 @@ function VideoPlayer({
   };
 
   const toggleFullScreen = () => {
-    screenfull.toggle(playerContainerRef.current);
+    if (screenfull.isEnabled) {
+      screenfull.toggle(playerContainerRef.current).catch((err) => {
+        console.error("Fullscreen error:", err);
+      });
+    } else {
+      console.error("Fullscreen not supported on this device.");
+      showSnackbar("Fullscreen not supported on this device.", "error");
+    }
   };
 
   const handlePlaybackrateChange = (rate) => {
@@ -268,6 +275,7 @@ function VideoPlayer({
         onDoubleClick={handleDoubleClick}
       >
         <ReactPlayer
+          playsinline 
           ref={playerRef}
           width={"100%"}
           height={"100%"}
