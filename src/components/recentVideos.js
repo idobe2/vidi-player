@@ -5,10 +5,10 @@ import {
   Typography,
   IconButton,
   CardMedia,
+  Divider,
 } from "@mui/material";
 import BrowseGalleryIcon from "@mui/icons-material/BrowseGallery";
 import DeleteIcon from "@mui/icons-material/Delete";
-import "../global.css";
 import { truncateTitle } from "../utils/videoUtils";
 
 const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
@@ -39,6 +39,7 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        style={{ maxHeight: 500, overflowY: "auto" }}
       >
         {recentVideos.length === 0 ? (
           <MenuItem disabled>
@@ -46,23 +47,36 @@ const RecentVideos = ({ recentVideos, onVideoSelect, onDeleteVideo }) => {
           </MenuItem>
         ) : (
           recentVideos.map((video, index) => (
-            <MenuItem key={index} onClick={() => onVideoSelect(video)}>
-              <CardMedia
-                component="img"
-                image={video.thumbnail}
-                alt={video.title}
-                style={{ marginRight: 8, width: 100, height: 60 }}
-              />
-              <Typography variant="body2">
-                {truncateTitle(video.title, 40)}
-              </Typography>
-              <IconButton
-                aria-label="delete"
-                onClick={() => onDeleteVideo(index)}
+            <div key={index}>
+              <MenuItem
+                key={index}
+                onClick={() => onVideoSelect(video)}
+                style={{
+                  paddingRight: 0,
+                  paddingLeft: 5,
+                  paddingBottom: 0,
+                  paddingTop: 0,
+                }}
               >
-                <DeleteIcon />
-              </IconButton>
-            </MenuItem>
+                <CardMedia
+                  component="img"
+                  image={video.thumbnail}
+                  alt={video.title}
+                  style={{ marginRight: 8, width: 100, height: 60 }}
+                />
+                <Typography variant="body2">
+                  {truncateTitle(video.title, 40)}
+                </Typography>
+                <IconButton
+                  aria-label="delete"
+                  onClick={() => onDeleteVideo(index)}
+                  style={{ marginLeft: "auto" }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </MenuItem>
+              {index < recentVideos.length - 1 && <Divider />}
+            </div>
           ))
         )}
       </Menu>

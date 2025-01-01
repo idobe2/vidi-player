@@ -36,6 +36,7 @@ export const ThemeProvider = ({ children }) => {
       },
       box: {
         main: isDarkMode ? "#232323" : "#2C3639", // Box background color
+        default: isDarkMode ? "#1A1A1D" : "#DCD7C9", // Default box background color
       }
     },
   });

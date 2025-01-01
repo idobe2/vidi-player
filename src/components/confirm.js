@@ -4,7 +4,9 @@ import {
   Typography,
   Button,
   Modal,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 const style = {
   position: "absolute",
@@ -28,6 +30,18 @@ const ConfirmModal = ({ open, title, message, options, onClose }) => {
       aria-describedby="confirmation-modal-description"
     >
       <Box sx={style}>
+      <IconButton
+          aria-label="close"
+          onClick={() => onClose(null)}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
         <Typography
           id="confirmation-modal-title"
           variant="h6"

@@ -1,17 +1,14 @@
 import {
-  getVideoThumbnail,
-  getYoutubeVideoTitle,
-  isYoutubeUrl,
-  getYoutubeVideoId,
-  getYoutubePlaylistId,
-  detectKind,
+  parseYoutubeUrl,
+  fetchYoutubeData,
+  fetchVideoThumbnail,
 } from "../utils/videoUtils";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const processFileInput = async (file) => {
   const videoUrl = URL.createObjectURL(file);
-  const thumbnail = await getVideoThumbnail(videoUrl);
+  const thumbnail = await fetchVideoThumbnail(videoUrl);
   return {
     title: file.name,
     url: videoUrl,
@@ -20,41 +17,22 @@ export const processFileInput = async (file) => {
 };
 
 export const processUrlInput = async (url) => {
-  if (isYoutubeUrl(url)) {
-    const kind = detectKind(url);
-
-    let videoId;
-    let embedUrl;
-    let title;
-
-    switch (kind) {
-      case "youtube#video":
-        videoId = getYoutubeVideoId(url);
-        embedUrl = `https://www.youtube.com/embed/${videoId}?showinfo=0&enablejsapi=1&origin=${BASE_URL}`;
-        title = await getYoutubeVideoTitle(url);
-        break;
-
-      case "youtube#playlist":
-        videoId = getYoutubePlaylistId(url);
-        embedUrl = `https://www.youtube.com/embed/videoseries?list=${videoId}`;
-        title = await getYoutubeVideoTitle(url);
-        break;
-
-      default:
-        throw new Error("Unsupported YouTube URL.");
-    }
+  const { kind, id } = parseYoutubeUrl(url);
+  if (kind) {
+    const youtubeData = await fetchYoutubeData(kind, id);
+    const embedUrl =
+      kind === "video"
+        ? `https://www.youtube.com/embed/${id}?showinfo=0&enablejsapi=1&origin=${BASE_URL}`
+        : `https://www.youtube.com/embed/videoseries?list=${id}`;
 
     return {
-      title,
+      title: youtubeData.title,
       url: embedUrl,
-      thumbnail:
-        kind === "youtube#video"
-          ? `https://img.youtube.com/vi/${videoId}/0.jpg`
-          : null,
+      thumbnail: youtubeData.thumbnail,
     };
   } else {
     const title = url.split("/").pop();
-    const thumbnail = await getVideoThumbnail(url);
+    const thumbnail = await fetchVideoThumbnail(url);
     return {
       title,
       url,
@@ -82,4 +60,5 @@ export const handleFileSubmit = async (
 
   setVideoSource(newVideo.url, newVideo.title, []);
   addRecentVideo(newVideo);
+  console.log("New video added: ", newVideo);
 };

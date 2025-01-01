@@ -32,7 +32,11 @@ export function VideoProvider({ children }) {
           : video
       );
       localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
-      return { ...prevState, recentVideos: updatedVideos, bookmarks: updatedBookmarks };
+      return {
+        ...prevState,
+        recentVideos: updatedVideos,
+        bookmarks: updatedBookmarks,
+      };
     });
   };
 
@@ -73,10 +77,24 @@ export function VideoProvider({ children }) {
 
   const deleteVideo = (index) => {
     setState((prevState) => {
-      const updatedVideos = prevState.recentVideos.filter((_, i) => i !== index);
+      const updatedVideos = prevState.recentVideos.filter(
+        (_, i) => i !== index
+      );
       localStorage.setItem("recentVideos", JSON.stringify(updatedVideos));
       return { ...prevState, recentVideos: updatedVideos };
     });
+  };
+
+  const deleteAllData = () => {
+    localStorage.removeItem("recentVideos");
+    setState((prevState) => ({
+      ...prevState,
+      recentVideos: [],
+    }));
+    window.location.href = "/";
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   return (
@@ -91,6 +109,7 @@ export function VideoProvider({ children }) {
         submitVideo,
         renameBookmark,
         changeBookmarkIndex,
+        deleteAllData,
       }}
     >
       {children}

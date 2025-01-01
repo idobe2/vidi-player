@@ -54,7 +54,8 @@ body {
 
 .controlsIcons:hover {
   color: #fff;
-  transform: scale(1);
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .bottomIcons {

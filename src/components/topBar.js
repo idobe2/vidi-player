@@ -9,7 +9,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Grid2,
+  Box,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/themeContext";
@@ -77,6 +77,7 @@ const TopBar = ({
     handleCloseMenu();
   };
 
+  // eslint-disable-next-line
   const handleReload = () => {
     window.location.href = "/";
     setTimeout(() => {
@@ -87,28 +88,38 @@ const TopBar = ({
   return (
     <>
       <AppBar position="fixed">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            sx={{ display: { xs: "none", sm: "block" }, flexGrow: 1 }}
-            style={{}}
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: { xs: "auto", sm: 3 },
+            }}
           >
-            <Link
-              to="/"
-              style={{ color: "white", textDecoration: "none" }}
-              onClick={handleReload}
+            <Typography
+              variant="h6"
+              sx={{
+                display: { xs: "none", sm: "block" },
+                flexGrow: 1,
+              }}
             >
-              Vi-Di Player
-            </Link>
-          </Typography>
-          <Grid2
-            container
-            direction="row"
-            position="absolute"
-            alignItems="center"
-            sx={{ pl: { xs: 20, sm: 14 } }}
-          >
-            <Grid2>
+              <Link
+                to="/"
+                style={{ color: "white", textDecoration: "none" }}
+                // onClick={handleReload}
+              >
+                Vi-Di Player
+              </Link>
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: { xs: "auto", sm: 2 },
+                ml: { xs: -2, sm: "auto" },
+                mr: { xs: 1, sm: 0 },
+              }}
+            >
               <Button
                 color="inherit"
                 onClick={() => {
@@ -117,58 +128,74 @@ const TopBar = ({
               >
                 <AddCircleOutlineIcon fontSize="large" />
               </Button>
-            </Grid2>
-            <Grid2>
+
               <RecentVideos
                 recentVideos={recentVideos}
                 onVideoSelect={handleVideoSelect}
                 onDeleteVideo={onDeleteVideo}
               />
-            </Grid2>
-          </Grid2>
+            </Box>
+          </Box>
 
-          <Grid2 sx={{ mr: { xs: 14, sm: "auto" } }}>
-            <SearchBar onSearch={handleSearch} />
-          </Grid2>
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={handleCloseMenu}
-          >
-            {searchResults.map((result, index) => (
-              <MenuItem key={index} onClick={() => handleResultSelect(result)}>
-                <ListItemAvatar>
-                  <Avatar src={result.thumbnail} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={result.title}
-                  secondary={truncateTitle(result.description, 70)}
-                />
-              </MenuItem>
-            ))}
-          </Menu>
-          <Grid2
+          <Box
             sx={{
-              display: { xs: "none", sm: "block" },
-              pr: { xs: "4%", sm: 0 },
+              display: "flex",
+              gap: { xs: "auto", sm: 2 },
             }}
           >
-            <Button color="inherit" component={Link} to="/about">
-              About
-            </Button>
-          </Grid2>
-          <Button color="inherit" onClick={handleOpenInfo}>
-            <InfoIcon fontSize="large" />
-          </Button>
-          <Info open={infoOpen} onClose={handleCloseInfo} />
+            <SearchBar onSearch={handleSearch} />
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleCloseMenu}
+            >
+              {searchResults.map((result, index) => (
+                <MenuItem
+                  key={index}
+                  onClick={() => handleResultSelect(result)}
+                >
+                  <ListItemAvatar>
+                    <Avatar src={result.thumbnail} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={result.title}
+                    secondary={truncateTitle(result.description, 70)}
+                  />
+                </MenuItem>
+              ))}
+            </Menu>
 
-          <Button color="inherit" onClick={toggleTheme}>
-            {isDarkMode ? (
-              <LightModeIcon fontSize="large" />
-            ) : (
-              <DarkModeIcon fontSize="large" />
-            )}
-          </Button>
+            <Box
+              sx={{
+                display: "flex",
+                mr: { xs: -2, sm: 0 },
+                ml: { xs: -2, sm: 0 },
+              }}
+            >
+              <Box
+                sx={{
+                  display: { xs: "none", sm: "flex" },
+                }}
+              >
+                <Button color="inherit" component={Link} to="/about">
+                  About
+                </Button>
+              </Box>
+
+              <Button color="inherit" onClick={handleOpenInfo}>
+                <InfoIcon fontSize="large" />
+              </Button>
+              <Info open={infoOpen} onClose={handleCloseInfo} />
+
+              <Button color="inherit" onClick={toggleTheme}>
+                {isDarkMode ? (
+                  <LightModeIcon fontSize="large" />
+                ) : (
+                  <DarkModeIcon fontSize="large" />
+                )}
+              </Button>
+            </Box>
+          </Box>
         </Toolbar>
       </AppBar>
       <FileManager

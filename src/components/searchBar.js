@@ -36,7 +36,7 @@ const SearchBar = ({ onSearch }) => {
         color="secondary"
         onClick={handleSearch}
       >
-        <SearchIcon fontSize="large"/>
+        <SearchIcon fontSize="medium"/>
       </Button>
     </Box>
   );

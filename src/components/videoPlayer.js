@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, Button } from "@mui/material";
 import ReactPlayer from "react-player";
 import "../global.css";
 import PlayerControls from "./playerControls";
@@ -8,6 +8,9 @@ import Bookmarks from "./bookmarks";
 import { useSnackbar } from "../context/snackbarProvider";
 import { useKeyboardShortcut } from "../hooks/useKeyboardShortcut";
 import { useVideoContext } from "../context/videoContext";
+import DropdownShareButton from "./dropdownShareButton";
+import { useConfirm } from "../context/confirmProvider";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 let count = 0;
 let repeatFlag = false;
@@ -23,16 +26,18 @@ function VideoPlayer({ source, title }) {
     repeat: "off",
   });
 
-  const showSnackbar = useSnackbar();
   const {
     bookmarks,
     addBookmark,
     updateBookmarks,
     renameBookmark,
     changeBookmarkIndex,
+    deleteAllData,
   } = useVideoContext();
 
   const [timeDisplayFormat, setTimeDisplayFormat] = useState("normal");
+  const showSnackbar = useSnackbar();
+  const confirm = useConfirm();
 
   const format = (seconds) => {
     if (isNaN(seconds)) {
@@ -251,6 +256,20 @@ function VideoPlayer({ source, title }) {
     },
   });
 
+  const handleDelete = async () => {
+    const result = await confirm(
+      "Delete all recent videos?",
+      "Are you sure you want to delete all recent videos and bookmarks? This action cannot be undone.",
+      [
+        { label: "No", value: false, variant: "outlined", color: "secondary" },
+        { label: "Yes", value: true, variant: "contained" },
+      ]
+    );
+    if (result) {
+      deleteAllData();
+    }
+  };
+
   return (
     <Container maxWidth="md">
       <div
@@ -271,6 +290,7 @@ function VideoPlayer({ source, title }) {
           playbackRate={playbackRate}
           onProgress={handleProgress}
           onEnded={handleEnd}
+          onStart={handleMouseMove}
           loop={repeat === "repeat" ? true : false}
           config={{
             file: {
@@ -315,7 +335,7 @@ function VideoPlayer({ source, title }) {
           bgcolor: "box.main",
           marginTop: 2,
           width: "100%",
-          boxShadow: "24",
+          boxShadow: "12",
         }}
       >
         <Typography variant="h6" padding={2} paddingBottom={0}>
@@ -344,6 +364,29 @@ function VideoPlayer({ source, title }) {
             onChangeIndex={changeBookmarkIndex}
           />
         )}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          borderRadius: 2,
+          // bgcolor: "box.default",
+          marginTop: 2,
+          width: "100%",
+          height: 50,
+          // boxShadow: "12",
+        }}
+      >
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ marginRight: 2, height: "70%", width: "7%" }}
+          onClick={handleDelete}
+        >
+          <DeleteIcon />
+        </Button>
+        <DropdownShareButton />
       </Box>
       <canvas ref={canvasRef} />
     </Container>
