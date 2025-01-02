@@ -53,15 +53,26 @@ function PlayerControls(
         direction="row"
         alignItems="center"
         justifyContent="space-between"
-        style={{ padding: 16 }}
+        style={{ padding: 12 }}
       >
-        <Grid2 sx={{ width: { xs: "80%", sm: "90%" } }}>
+        <Grid2
+          sx={{
+            width: { xs: "80%", sm: "90%" },
+          }}
+        >
           <Typography variant="h5" style={{ color: "#fff" }}>
             {title}
           </Typography>
         </Grid2>
 
-        <Grid2>
+        <Grid2
+          sx={{
+            width: { xs: "20%", sm: "auto" },
+            scale: { xs: 0.8, sm: 1 },
+            mt: { xs: -1, sm: 0 },
+            mr: { xs: -2, sm: 0 },
+          }}
+        >
           <Button
             onClick={onBookmark}
             variant="contained"
@@ -146,7 +157,7 @@ function PlayerControls(
               <IconButton
                 onClick={onPlayPause}
                 className="bottomIcons"
-                sx={{ color: "white", mr: { xs: -1, sm: "auto" }}}
+                sx={{ color: "white", mr: { xs: -1, sm: "auto" } }}
               >
                 {playing ? (
                   <PauseIcon fontSize="large" />
@@ -182,12 +193,17 @@ function PlayerControls(
                   />
                 </Grid2>
 
-                <Grid2 sx={{ ml: { xs: -1, sm: 3} }}>
+                <Grid2 sx={{ ml: { xs: -1, sm: 3 } }}>
                   <Button
                     onClick={onChangeDispayFormat}
                     variant="text"
                     className="bottomIcons"
-                    style={{ color: "#fff", marginLeft: 16, minWidth: 100, right: 30 }}
+                    style={{
+                      color: "#fff",
+                      marginLeft: 16,
+                      minWidth: 100,
+                      right: 30,
+                    }}
                     sx={{
                       ml: { xs: 4, sm: "auto" },
                     }}

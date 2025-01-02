@@ -30,6 +30,11 @@ const SearchBar = ({ onSearch }) => {
             handleSearch();
           }
         }}
+        sx={{
+          '& .MuiInputBase-input::placeholder': {
+            color: "placeholder.main",
+          },
+        }}
       />
       <Button
         id="search-button"

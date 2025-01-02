@@ -34,12 +34,26 @@ export const ThemeProvider = ({ children }) => {
         primary: isDarkMode ? "#ffffff" : "#7D5A50", // Default text color
         secondary: isDarkMode ? "#bbbbbb" : "#333333", // Muted text color
       },
+      placeholder: {
+        main: isDarkMode ? "#bf80ff" : "#F38181", // Placeholder text color
+      },
       box: {
         main: isDarkMode ? "#232323" : "#2C3639", // Box background color
         default: isDarkMode ? "#1A1A1D" : "#DCD7C9", // Default box background color
-      }
+      },
     },
   });
+
+  theme.typography.h5 = {
+    fontSize: "0.8rem",
+    fontWeight: 500,
+    "@media (min-width:600px)": {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1.5rem",
+    },
+  };
 
   useEffect(() => {
     document.body.setAttribute("data-theme", isDarkMode ? "dark" : "light");

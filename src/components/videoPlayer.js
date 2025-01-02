@@ -288,6 +288,7 @@ function VideoPlayer({ source, title }) {
           playing={playing}
           volume={volume}
           playbackRate={playbackRate}
+          controls={false}
           onProgress={handleProgress}
           onEnded={handleEnd}
           onStart={handleMouseMove}
